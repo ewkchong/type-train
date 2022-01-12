@@ -1,0 +1,20 @@
+{
+  "name": "typing-project",
+  "version": "1.0.0",
+  "description": "A web application to improve your typing skills.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ewkchong/typing-project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ewkchong/typing-project/issues"
+  },
+  "homepage": "https://github.com/ewkchong/typing-project#readme"
+}
