@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/ewkchong/typing-project/issues"
   },
-  "homepage": "https://github.com/ewkchong/typing-project#readme"
+  "homepage": "https://github.com/ewkchong/typing-project#readme",
+  "dependencies": {
+    "firebase": "^9.6.2"
+  }
 }
