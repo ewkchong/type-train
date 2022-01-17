@@ -11,7 +11,6 @@ export default class WordGenerator {
 
     }
     
-    
     // generates an array of random words with given length
     async generate(length) {
         this.words = await (await this.fetchJSON()).json();

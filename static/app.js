@@ -1,14 +1,11 @@
 import WordGenerator from './WordGenerator.js';
 
-const exampleSentence = "This is an example sentence.";
-const sentenceArr = exampleSentence.split('');
-
-const textArea = document.querySelector(".text-area-grid");
+const textArea = document.querySelector(".text-area-container");
 
 let wordGen = new WordGenerator({});
 
 async function populateTextField() {
-    let wordArr = await wordGen.generate(30);
+    let wordArr = await wordGen.generate(50);
     
     for (let i = 0; i < wordArr.length; i++) {
         const word = document.createElement("div");

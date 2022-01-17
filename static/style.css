@@ -1,34 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&family=Source+Code+Pro&display=swap');
+
 body {
-    background-color: grey;
+    font-family: 'Source Code Pro'; 
+    background-color: white;
 }
 
-title {
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-weight: bold;
+h1 {
+    text-align: center;
 }
 
 .text-area {
     display: flex;
     justify-content: space-around;
     border: 2px black solid; 
-    padding: 3rem 7rem 3rem 7rem;
+    padding: 3rem 10rem 3rem 10rem;
 }
 
-.text-area-grid {
-    font-family: monospace;
+.text-area-container {
+    font-family: 'Source Code Pro', 'Comic Sans MS';
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    font-size: 35px;
+    font-size: 30px;
 }
 
-.text-area-grid div.word {
+.text-area-container div.word {
     display: flex;
     flex-wrap: nowrap;
     margin-right: 0.85rem;
-}
-
-.text-area-grid div {
     text-align: center;
+}
+.complete {
+    color: #88FF88;
 }
 
