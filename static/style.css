@@ -7,3 +7,23 @@ title {
     font-weight: bold;
 }
 
+.text-area {
+    display: flex;
+    justify-content: space-around;
+    border: 2px black solid; 
+    padding: 3rem 7rem 3rem 7rem;
+}
+
+.text-area-grid {
+    font-family: monospace;
+    display: grid;
+    font-size: 35px;
+    grid-template-columns: repeat(40, 25px);
+    grid-template-rows: repeat(4, 35px);
+    row-gap: 10px;
+}
+
+.text-area-grid div {
+    text-align: center;
+}
+
