@@ -1,3 +1,5 @@
+import WordGenerator from './WordGenerator.js';
+
 const exampleSentence = "This is an example sentence.";
 const sentenceArr = exampleSentence.split('');
 
@@ -8,3 +10,5 @@ for (let i = 0; i < sentenceArr.length; i++) {
     letter.textContent = sentenceArr[i];
     textArea.appendChild(letter);
 }
+
+const wordGen = new WordGenerator({});
