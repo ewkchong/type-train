@@ -9,27 +9,23 @@ export default class WordGenerator {
             lang: 'english250'
         };
 
-        fetch(this.options.lang + '.json')
-            .then((resp) => { 
-                words = resp.json(); 
-                this.readyToGenerate = true;
-            })
-            .catch((err) => { console.log(err); });
     }
+    
+    
+    // generates an array of random words with given length
+    async generate(length) {
+        this.words = await (await this.fetchJSON()).json();
 
-    waitFileReady() {
-        while (!this.readyToGenerate) { }
+        const arr = [];
+        
+        for (let i = 0; i < length; i++) {
+            arr.push(this.words[Math.floor(Math.random() * this.words.length)]);
+        }
+        return arr;
     }
-
-    // !! TODO
-    generate() {
-        this.waitFileReady();
-        console.log('Generation completed');
+    
+    fetchJSON() {
+        return fetch(this.options.lang + '.json');
     }
-
-    next() {
-        return words[Math.floor(Math.random() * this.words.length)]
-    }
-
 
 }

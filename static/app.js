@@ -5,10 +5,24 @@ const sentenceArr = exampleSentence.split('');
 
 const textArea = document.querySelector(".text-area-grid");
 
-for (let i = 0; i < sentenceArr.length; i++) {
-    let letter = document.createElement("div");
-    letter.textContent = sentenceArr[i];
-    textArea.appendChild(letter);
+let wordGen = new WordGenerator({});
+
+async function populateTextField() {
+    let wordArr = await wordGen.generate(30);
+    
+    for (let i = 0; i < wordArr.length; i++) {
+        const word = document.createElement("div");
+        word.classList = "word";
+        for (const char of wordArr[i]) {
+            const letter = document.createElement("div");
+            letter.classList = "letter";
+            letter.textContent = char;
+            word.appendChild(letter);
+        }
+        textArea.appendChild(word);
+    }
 }
 
-const wordGen = new WordGenerator({});
+populateTextField();
+
+
