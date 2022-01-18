@@ -4,9 +4,15 @@ let textArea = document.querySelector(".text-area-container");
 const textAreaDiv = document.querySelector(".text-area");
 
 let wordGen = new WordGenerator({});
+let JSONready = false;
 
 async function populateTextField() {
-    let wordArr = await wordGen.generate(50);
+    if (!JSONready) {
+        await wordGen.storeJSON();
+        JSONready = true;
+    }
+    
+    let wordArr = wordGen.generate(50);
     
     for (let i = 0; i < wordArr.length; i++) {
         const word = document.createElement("div");

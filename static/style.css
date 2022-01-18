@@ -5,6 +5,11 @@ body {
     background-color: white;
 }
 
+header {
+    display: flex;
+    flex-direction: column;
+}
+
 .center-text {
     text-align: center;
 }
@@ -16,6 +21,7 @@ body {
     padding: 2rem 4rem 2rem 4rem;
     margin-left: 14.75rem;
     margin-right: 14.75rem;
+    min-height: 10rem;
 }
 
 .text-area-container {
@@ -37,8 +43,28 @@ body {
     margin-right: 0.975625rem;
     text-align: center;
     animation: fade-in 1s;
+    color: #8a8a8a;
 }
 .complete {
     color: #88FF88;
+}
+
+.profile {
+    position: absolute;
+    align-self: flex-end;
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-icon {
+    align-self: center;
+    width: 60px;
+    height: 60px;
+}
+
+.profile-links {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
 }
 

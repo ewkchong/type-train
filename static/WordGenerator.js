@@ -10,11 +10,13 @@ export default class WordGenerator {
         };
 
     }
+
+    async storeJSON() {
+        this.words = await (await this.fetchJSON()).json();
+    }
     
     // generates an array of random words with given length
-    async generate(length) {
-        this.words = await (await this.fetchJSON()).json();
-
+    generate(length) {
         const arr = [];
         
         for (let i = 0; i < length; i++) {
