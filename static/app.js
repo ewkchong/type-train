@@ -1,6 +1,7 @@
 import WordGenerator from './WordGenerator.js';
 
-const textArea = document.querySelector(".text-area-container");
+let textArea = document.querySelector(".text-area-container");
+const textAreaDiv = document.querySelector(".text-area");
 
 let wordGen = new WordGenerator({});
 
@@ -21,5 +22,18 @@ async function populateTextField() {
 }
 
 populateTextField();
+
+document.addEventListener('keydown', (k) => {
+    if (k.code == "Escape") {
+        textArea.remove();
+        
+        const newTextArea = document.createElement("div");
+        newTextArea.classList = "text-area-container";
+        textAreaDiv.appendChild(newTextArea);
+        textArea = document.querySelector(".text-area-container");
+        populateTextField();
+        console.log("text field populated");
+    }
+})
 
 

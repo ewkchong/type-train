@@ -5,7 +5,7 @@ body {
     background-color: white;
 }
 
-h1 {
+.center-text {
     text-align: center;
 }
 
@@ -13,7 +13,9 @@ h1 {
     display: flex;
     justify-content: space-around;
     border: 2px black solid; 
-    padding: 3rem 10rem 3rem 10rem;
+    padding: 2rem 4rem 2rem 4rem;
+    margin-left: 14.75rem;
+    margin-right: 14.75rem;
 }
 
 .text-area-container {
@@ -21,14 +23,20 @@ h1 {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    font-size: 30px;
+    font-size: 26px;
+}
+
+@keyframes fade-in {
+    from {opacity: 0;}
+    to {opacity: 1;}
 }
 
 .text-area-container div.word {
     display: flex;
     flex-wrap: nowrap;
-    margin-right: 0.85rem;
+    margin-right: 0.975625rem;
     text-align: center;
+    animation: fade-in 1s;
 }
 .complete {
     color: #88FF88;
