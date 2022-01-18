@@ -3,6 +3,9 @@
 body {
     font-family: 'Source Code Pro'; 
     background-color: white;
+    display: flex;
+    flex-direction: column;
+    min-height: 98vh;
 }
 
 header {
@@ -66,5 +69,18 @@ header {
     display: flex;
     flex-direction: column;
     text-align: center;
+}
+
+footer {
+    display: flex;
+    margin-top: auto;
+}
+
+footer a {
+    margin-right: 2rem;
+}
+
+footer .settings-label {
+    margin-left: auto;
 }
 
