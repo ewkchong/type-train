@@ -21,4 +21,43 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
-const auth = getAuth(app)
+const auth = getAuth(app);
+
+
+
+
+// const selected = document.querySelector(".selected");
+// const profileSettings = document.querySelector(".profile-settings");
+// const settingsList = document.querySelectorAll(".setting");
+
+
+// selected.addEventListener("click", () => {
+//   profileSettings.classList.toggle("active");
+// })
+
+// settingsList.forEach( s => {
+//   s.addEventListener("click", () => {
+//       selected.innerHTML = s.querySelector("a").innerHTML;
+//       profileSettings.classList.remove("active");
+//   })
+// })
+
+// const profileImage = document.getElementById("profile-image");
+
+// profileImage.addEventListener("click", function() {
+//   this.classList.toggle("active");
+
+// })
+
+
+var dd_main = document.querySelector(".dd_main");
+
+	dd_main.addEventListener("click", function(){
+		this.classList.toggle("active");
+	})
+
+
+
+
+
+
