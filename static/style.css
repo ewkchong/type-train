@@ -43,7 +43,6 @@ header {
 .text-area-container div.word {
     display: flex;
     flex-wrap: nowrap;
-    margin-right: 0.975625rem;
     text-align: center;
     animation: fade-in 1s;
     color: #8a8a8a;

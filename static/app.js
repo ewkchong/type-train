@@ -23,6 +23,9 @@ async function populateTextField() {
             letter.textContent = char;
             word.appendChild(letter);
         }
+        if (i < (wordArr.length - 1)) {
+            word.innerHTML += "&nbsp;"
+        }
         textArea.appendChild(word);
     }
 }
@@ -30,7 +33,8 @@ async function populateTextField() {
 populateTextField();
 
 document.addEventListener('keydown', (k) => {
-    if (k.code == "Escape") {
+    if (k.code == "Escape" || k.code == "Tab") {
+        k.preventDefault();
         spinAndRestart();
     }
 });
