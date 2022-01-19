@@ -2,7 +2,7 @@
 
 body {
     font-family: 'Source Code Pro'; 
-    background-color: white;
+    background-color: rgb(228, 228, 228);
     display: flex;
     flex-direction: column;
     min-height: 98vh;
@@ -78,6 +78,7 @@ h4 {
 footer {
     display: flex;
     margin-top: auto;
+    background-color: rgb(199, 199, 199);
 }
 
 footer a {
@@ -91,7 +92,7 @@ footer .settings-label {
 .refresh-button {
     align-self: center;
     margin-top: 1rem;
-    margin-bottom: 0.6rem;
+    margin-bottom: 0.7rem;
     padding-left: 0.6rem;
     padding-right: 0.6rem;
     border-radius: 5px;
@@ -100,10 +101,16 @@ footer .settings-label {
 }
 
 .refresh-button-hover {
-    background-color:#dddddd;
+    background-color:rgba(184, 184, 184, 0.4);
+    transition: background-color 0.7s ease-out;
+}
+
+.refresh-button-clicked {
+    background-color: rgba(184, 184, 184, 1) !important;
 }
 
 #refresh-button-image {
+    display: block;
     width: 50px;
     height: 50px;
 }

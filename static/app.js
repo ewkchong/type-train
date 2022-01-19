@@ -64,5 +64,13 @@ refreshButton.addEventListener("click", () => {
     spinAndRestart();
 })
 
+refreshButton.addEventListener("mousedown", () => {
+    refreshButton.classList.add("refresh-button-clicked");
+});
+
+refreshButton.addEventListener("mouseup", () => {
+    refreshButton.classList.remove("refresh-button-clicked");
+})
+
 
 
