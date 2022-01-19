@@ -11,7 +11,7 @@ async function populateTextField() {
         await wordGen.storeJSON();
         JSONready = true;
     }
-    
+
     let wordArr = wordGen.generate(50);
     
     for (let i = 0; i < wordArr.length; i++) {
@@ -31,15 +31,38 @@ populateTextField();
 
 document.addEventListener('keydown', (k) => {
     if (k.code == "Escape") {
-        textArea.remove();
-        
-        const newTextArea = document.createElement("div");
-        newTextArea.classList = "text-area-container";
-        textAreaDiv.appendChild(newTextArea);
-        textArea = document.querySelector(".text-area-container");
-        populateTextField();
-        console.log("text field populated");
+        spinAndRestart();
     }
+});
+
+const refreshButton = document.querySelector(".refresh-button");
+const refreshButtonImage = document.querySelector("#refresh-button-image");
+
+refreshButton.addEventListener("mouseenter", () => {
+    refreshButton.classList.add("refresh-button-hover");
+});
+
+refreshButton.addEventListener("mouseleave", () => {
+    refreshButton.classList.remove("refresh-button-hover");
+});
+
+function spinAndRestart() {
+    refreshButtonImage.classList.remove("spin-arrow");
+    void refreshButtonImage.offsetWidth;
+    refreshButtonImage.classList.add("spin-arrow");
+
+    textArea.remove();
+        
+    const newTextArea = document.createElement("div");
+    newTextArea.classList = "text-area-container";
+    textAreaDiv.appendChild(newTextArea);
+    textArea = document.querySelector(".text-area-container");
+    populateTextField();
+}
+
+refreshButton.addEventListener("click", () => {
+    spinAndRestart();
 })
+
 
 

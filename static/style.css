@@ -71,6 +71,10 @@ header {
     text-align: center;
 }
 
+h4 {
+    margin: 0 !important;
+}
+
 footer {
     display: flex;
     margin-top: auto;
@@ -83,4 +87,34 @@ footer a {
 footer .settings-label {
     margin-left: auto;
 }
+
+.refresh-button {
+    align-self: center;
+    margin-top: 1rem;
+    margin-bottom: 0.6rem;
+    padding-left: 0.6rem;
+    padding-right: 0.6rem;
+    border-radius: 5px;
+    background-color: transparent;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.refresh-button-hover {
+    background-color:#dddddd;
+}
+
+#refresh-button-image {
+    width: 50px;
+    height: 50px;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.spin-arrow {
+    animation: spin 1s ease-in-out 0s;
+}
+
 
