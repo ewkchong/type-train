@@ -7,54 +7,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Type Train is an app that helps users type faster, more accurately, and more efficiently">
     
-    <title>Document</title>
+    <script defer type="module" src="app.js"></script>
+    <title>Type Train</title>
 </head>
 <body>
 
     <header>
-        <h1>Type Train</h1>
+        <h1 class="center-text">🚂 Type Train</h1>
         <img src="" alt="" id="train">
-        
-        <img src="" alt="" id="profile">
-        <div>
-            <a>View Stats</a>
-            <a>Logout<img src="" alt="" id="logout-button"></a>
+        <div class="profile">
+            <img class="profile-icon" src="images/profile-icon.png" alt="Profile Icon" id="profile">
+            <div class="profile-links">
+                <a href="">View Stats</a>
+                <a href="">Logout<img src="" alt="" id="logout-button"></a>
+            </div>
         </div>
     </header>
 
     <div class="text-area">
+        <div class="text-area-container"></div>
     </div>
 
     <!-- train moving -->
 
-    <img src="" alt="" id="refresh-button">
-
-    
-    <h4> Esc - Restart Test </h4>
-
-    <div>Settings</div>
-    <div class="settings-panel"></div>
+    <div class="refresh-button">
+        <img src="images/restart-arrow.png" alt="Restart Arrow" id="refresh-button-image">
+    </div>
+    <h4 class="center-text"> Esc - Restart Test </h4>
 
     <footer>
-        <a> Contact <img src="" alt="" id="mail-image"></a>
-        <a> GitHub  <img src ="" alt="" id="github"> </a>
-
+        <a href="/static/"><img src="" alt="" id="mail-image">Contact</a>
+        <a href="https://github.com/ewkchong/typing-project"><img src ="" alt="" id="github">GitHub</a>
+        <div class="settings-label">Settings</div>
+        <div class="settings-panel"></div>
+        
     </footer>
-    
-
-
-
-
-
-    
-    
-    
-    
-    
-   
-
-  
-
-
 </body>
 </html>

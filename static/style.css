@@ -1,9 +1,127 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&family=Source+Code+Pro&display=swap');
+
 body {
-    background-color: grey;
+    font-family: 'Source Code Pro'; 
+    background-color: rgb(228, 228, 228);
+    display: flex;
+    flex-direction: column;
+    min-height: 98vh;
 }
 
-title {
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-weight: bold;
+header {
+    display: flex;
+    flex-direction: column;
 }
+
+.center-text {
+    text-align: center;
+}
+
+.text-area {
+    display: flex;
+    justify-content: space-around;
+    border: 2px black solid; 
+    padding: 2rem 4rem 2rem 4rem;
+    margin-left: 14.75rem;
+    margin-right: 14.75rem;
+    min-height: 10rem;
+}
+
+.text-area-container {
+    font-family: 'Source Code Pro', 'Comic Sans MS';
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    font-size: 26px;
+}
+
+@keyframes fade-in {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+.text-area-container div.word {
+    display: flex;
+    flex-wrap: nowrap;
+    margin-right: 0.975625rem;
+    text-align: center;
+    animation: fade-in 1s;
+    color: #8a8a8a;
+}
+.complete {
+    color: #88FF88;
+}
+
+.profile {
+    position: absolute;
+    align-self: flex-end;
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-icon {
+    align-self: center;
+    width: 60px;
+    height: 60px;
+}
+
+.profile-links {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+h4 {
+    margin: 0 !important;
+}
+
+footer {
+    display: flex;
+    margin-top: auto;
+    background-color: rgb(199, 199, 199);
+}
+
+footer a {
+    margin-right: 2rem;
+}
+
+footer .settings-label {
+    margin-left: auto;
+}
+
+.refresh-button {
+    align-self: center;
+    margin-top: 1rem;
+    margin-bottom: 0.7rem;
+    padding-left: 0.6rem;
+    padding-right: 0.6rem;
+    border-radius: 5px;
+    background-color: transparent;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.refresh-button-hover {
+    background-color:rgba(184, 184, 184, 0.4);
+    transition: background-color 0.7s ease-out;
+}
+
+.refresh-button-clicked {
+    background-color: rgba(184, 184, 184, 1) !important;
+}
+
+#refresh-button-image {
+    display: block;
+    width: 50px;
+    height: 50px;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.spin-arrow {
+    animation: spin 1s ease-in-out 0s;
+}
+
 
