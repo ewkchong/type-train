@@ -12,7 +12,7 @@ async function populateTextField() {
         JSONready = true;
     }
 
-    let wordArr = wordGen.generate(50);
+    let wordArr = wordGen.generate(80);
     
     for (let i = 0; i < wordArr.length; i++) {
         const word = document.createElement("div");
