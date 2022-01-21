@@ -73,4 +73,14 @@ refreshButton.addEventListener("mouseup", () => {
 })
 
 
+const profileIcon = document.getElementById("profile");
+const ddMenu = document.querySelector(".dd_menu");
+
+profileIcon.addEventListener("click", function() {
+    ddMenu.classList.toggle("active");
+})
+
+
+
+
 

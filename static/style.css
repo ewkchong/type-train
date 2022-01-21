@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&family=Source+Code+Pro&display=swap');
 
+
 body {
     font-family: 'Source Code Pro'; 
     background-color: rgb(228, 228, 228);
@@ -11,6 +12,7 @@ body {
 header {
     display: flex;
     flex-direction: column;
+    
 }
 
 .center-text {
@@ -123,5 +125,44 @@ footer .settings-label {
 .spin-arrow {
     animation: spin 1s ease-in-out 0s;
 }
+
+
+
+
+.profile .dd_menu {
+    top: 47px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0px 0px 3px rgba(0,0,0,0.25);
+    opacity: 0;
+
+}
+
+.option {
+    text-align: center;
+}
+
+.option:hover {
+    background-color: rgb(228, 228, 228);
+}
+
+.radio {
+    display: none;
+
+}
+
+.profile .dd_menu.active {
+    opacity: 1;
+  
+}
+
+.profile-icon:hover {
+    cursor: pointer;
+}
+
+
+
+
+
 
 
