@@ -62,8 +62,6 @@ header {
 
 .profile-icon {
     align-self: center;
-    width: 60px;
-    height: 60px;
 }
 
 .profile-links {
@@ -124,5 +122,32 @@ footer .settings-label {
 .spin-arrow {
     animation: spin 1s ease-in-out 0s;
 }
+
+.cursor {
+    position: absolute;
+    font-weight: 100;
+    font-size: 23px;
+    color: black;
+}
+
+@keyframes blinking {
+    0% {opacity: 1;}
+    40% {opacity: 1;}
+    60% {opacity: 0;}
+    100% {opacity: 0;}
+}
+
+.blinking {
+    animation: blinking 1s linear infinite;
+}
+
+
+.letter {
+    width: 16px;
+
+}
+
+
+
 
 
