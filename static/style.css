@@ -1,8 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&family=Source+Code+Pro&display=swap');
 
+:root {
+    --primary-bg-colour: rgb(228, 228, 228);
+    --secondary-bg-colour: rgb(199, 199, 199);
+    --incomplete-word: #8a8a8a;
+    --complete-word: #88FF88; 
+}
+
 body {
     font-family: 'Source Code Pro'; 
-    background-color: rgb(228, 228, 228);
+    background-color: var(--primary-bg-colour);
     display: flex;
     flex-direction: column;
     min-height: 98vh;
@@ -28,7 +35,7 @@ header {
 }
 
 .text-area-container {
-    font-family: 'Source Code Pro', 'Comic Sans MS';
+    font-family: 'Source Code Pro', monospace;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -46,10 +53,10 @@ header {
     margin-right: 0.975625rem;
     text-align: center;
     animation: fade-in 1s;
-    color: #8a8a8a;
+    color: var(--incomplete-word);
 }
 .complete {
-    color: #88FF88;
+    color: var(--complete-word);
 }
 
 .profile {
@@ -78,7 +85,7 @@ h4 {
 footer {
     display: flex;
     margin-top: auto;
-    background-color: rgb(199, 199, 199);
+    background-color: var(--secondary-bg-colour);
 }
 
 footer a {
