@@ -1,8 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&family=Source+Code+Pro&display=swap');
 
+:root {
+    --primary-bg-colour: rgb(228, 228, 228);
+    --secondary-bg-colour: rgb(199, 199, 199);
+    --incomplete-word: #8a8a8a;
+    --complete-word: #88FF88; 
+}
+
 body {
     font-family: 'Source Code Pro'; 
-    background-color: rgb(228, 228, 228);
+    background-color: var(--primary-bg-colour);
     display: flex;
     flex-direction: column;
     min-height: 98vh;
@@ -47,10 +54,10 @@ header {
     flex-wrap: nowrap;
     text-align: center;
     animation: fade-in 1s;
-    color: #8a8a8a;
+    color: var(--incomplete-word);
 }
 .complete {
-    color: #88FF88;
+    color: var(--complete-word);
 }
 
 .profile {
@@ -77,7 +84,7 @@ h4 {
 footer {
     display: flex;
     margin-top: auto;
-    background-color: rgb(199, 199, 199);
+    background-color: var(--secondary-bg-colour);
 }
 
 footer a {
@@ -97,6 +104,8 @@ footer .settings-label {
     border-radius: 5px;
     background-color: transparent;
     transition: background-color 0.3s ease-in-out;
+    user-select: none;
+    -webkit-user-drag: none;
 }
 
 .refresh-button-hover {
@@ -112,6 +121,8 @@ footer .settings-label {
     display: block;
     width: 50px;
     height: 50px;
+    user-select: none;
+    -webkit-user-drag: none;
 }
 
 @keyframes spin {
@@ -121,6 +132,10 @@ footer .settings-label {
 
 .spin-arrow {
     animation: spin 1s ease-in-out 0s;
+}
+
+.refresh-instructions {
+    user-select: none;
 }
 
 .cursor {
@@ -146,8 +161,4 @@ footer .settings-label {
     /* width: 16px; */
 
 }
-
-
-
-
 
