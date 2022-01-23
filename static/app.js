@@ -41,13 +41,13 @@ async function populateTextField() {
     for (let letter of document.querySelectorAll(".letter")) {
         letterArray.push(letter);
     }
-    cursor.style.left = letterArray[0].offsetLeft;
+    cursor.style.left = letterArray[0].getBoundingClientRect().left;
     cursor.classList.add("blinking");
 }
 
 populateTextField();
 
-const alphaNumeric = new RegExp('[a-z0-9]');
+const alphaNumeric = /(Key[A-Z])|(Digit[0-9])/i;
 cursorPosition = cursorPosition.substring(0, cursorPosition.length - 2);
 cursorPosition = parseFloat(cursorPosition);
 
@@ -62,7 +62,7 @@ document.addEventListener('keydown', (k) => {
         cursor.classList.remove("blinking");
         console.log(cursorPosition);
         cursorIndex++;
-        cursorPosition = letterArray[cursorIndex].offsetLeft - 6;
+        cursorPosition = letterArray[cursorIndex].getBoundingClientRect().left - 6.905;
         // cursorPosition += 15.61;
         cursor.style.left = cursorPosition + "px";
         
