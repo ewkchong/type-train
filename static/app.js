@@ -43,11 +43,12 @@ async function populateTextField() {
     }
     cursor.style.left = letterArray[0].getBoundingClientRect().left;
     cursor.classList.add("blinking");
+    cursor.classList.remove("hidden");
 }
 
 populateTextField();
 
-const alphaNumeric = /(Key[A-Z])|(Digit[0-9])/i;
+const alphaNumeric = /(Key[A-Z])|(Digit[0-9])|(Space)/i;
 cursorPosition = cursorPosition.substring(0, cursorPosition.length - 2);
 cursorPosition = parseFloat(cursorPosition);
 

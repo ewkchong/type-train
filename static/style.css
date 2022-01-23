@@ -156,9 +156,7 @@ footer .settings-label {
     animation: blinking 1s linear infinite;
 }
 
-
-.letter {
-    /* width: 16px; */
-
+.hidden {
+    display: none !important;
 }
 
