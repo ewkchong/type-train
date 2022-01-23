@@ -2,17 +2,24 @@ import WordGenerator from './WordGenerator.js';
 
 let textArea = document.querySelector(".text-area-container");
 const textAreaDiv = document.querySelector(".text-area");
+const cursor = document.querySelector(".cursor");
 
 let wordGen = new WordGenerator({});
 let JSONready = false;
 
+let letterArray = [];
+let cursorPosition = "302.5px";
+let cursorIndex = 0;
+
 async function populateTextField() {
+    letterArray = [];
+    cursorIndex = 0;
     if (!JSONready) {
         await wordGen.storeJSON();
         JSONready = true;
     }
 
-    let wordArr = wordGen.generate(50);
+    let wordArr = wordGen.generate(80);
     
     for (let i = 0; i < wordArr.length; i++) {
         const word = document.createElement("div");
@@ -23,17 +30,45 @@ async function populateTextField() {
             letter.textContent = char;
             word.appendChild(letter);
         }
+        if (i < (wordArr.length - 1)) {
+            const space = document.createElement("div");
+            space.classList = "letter";
+            space.innerHTML = "&nbsp;";
+            word.appendChild(space);
+        }
         textArea.appendChild(word);
     }
+    for (let letter of document.querySelectorAll(".letter")) {
+        letterArray.push(letter);
+    }
+    cursor.style.left = letterArray[0].getBoundingClientRect().left;
+    cursor.classList.add("blinking");
 }
 
 populateTextField();
 
+const alphaNumeric = /(Key[A-Z])|(Digit[0-9])/i;
+cursorPosition = cursorPosition.substring(0, cursorPosition.length - 2);
+cursorPosition = parseFloat(cursorPosition);
+
+// console.log(cursorPosition);
+
 document.addEventListener('keydown', (k) => {
-    if (k.code == "Escape") {
+    if (k.code == "Escape" || k.code == "Tab") {
+        k.preventDefault();
         spinAndRestart();
+    } else if (k.code.match(alphaNumeric)) {
+        // console.log(cursorIndex);
+        cursor.classList.remove("blinking");
+        console.log(cursorPosition);
+        cursorIndex++;
+        cursorPosition = letterArray[cursorIndex].getBoundingClientRect().left - 6.905;
+        // cursorPosition += 15.61;
+        cursor.style.left = cursorPosition + "px";
+        
     }
 });
+
 
 const refreshButton = document.querySelector(".refresh-button");
 const refreshButtonImage = document.querySelector("#refresh-button-image");
@@ -57,6 +92,7 @@ function spinAndRestart() {
     newTextArea.classList = "text-area-container";
     textAreaDiv.appendChild(newTextArea);
     textArea = document.querySelector(".text-area-container");
+    cursor.style.left = "302.5px";
     populateTextField();
 }
 

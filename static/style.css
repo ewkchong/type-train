@@ -31,7 +31,8 @@ header {
     padding: 2rem 4rem 2rem 4rem;
     margin-left: 14.75rem;
     margin-right: 14.75rem;
-    min-height: 10rem;
+    min-height: 5rem;
+    max-height: 132px;
 }
 
 .text-area-container {
@@ -40,6 +41,7 @@ header {
     flex-direction: row;
     flex-wrap: wrap;
     font-size: 26px;
+    overflow: hidden;
 }
 
 @keyframes fade-in {
@@ -50,7 +52,6 @@ header {
 .text-area-container div.word {
     display: flex;
     flex-wrap: nowrap;
-    margin-right: 0.975625rem;
     text-align: center;
     animation: fade-in 1s;
     color: var(--incomplete-word);
@@ -68,8 +69,6 @@ header {
 
 .profile-icon {
     align-self: center;
-    width: 60px;
-    height: 60px;
 }
 
 .profile-links {
@@ -139,4 +138,27 @@ footer .settings-label {
     user-select: none;
 }
 
+.cursor {
+    position: absolute;
+    font-weight: 100;
+    font-size: 23px;
+    color: black;
+}
+
+@keyframes blinking {
+    0% {opacity: 1;}
+    40% {opacity: 1;}
+    60% {opacity: 0;}
+    100% {opacity: 0;}
+}
+
+.blinking {
+    animation: blinking 1s linear infinite;
+}
+
+
+.letter {
+    /* width: 16px; */
+
+}
 
