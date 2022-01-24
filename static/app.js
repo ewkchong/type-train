@@ -2,13 +2,13 @@ import WordGenerator from './WordGenerator.js';
 
 let textArea = document.querySelector(".text-area-container");
 const textAreaDiv = document.querySelector(".text-area");
-const cursor = document.querySelector(".cursor");
+const cursor = document.querySelector("#cursor");
 
 let wordGen = new WordGenerator({});
 let JSONready = false;
 
 let letterArray = [];
-let cursorPosition = "302.5px";
+let cursorPosition = "308.349975px";
 let cursorIndex = 0;
 
 async function populateTextField() {
@@ -41,7 +41,8 @@ async function populateTextField() {
     for (let letter of document.querySelectorAll(".letter")) {
         letterArray.push(letter);
     }
-    cursor.style.left = letterArray[0].getBoundingClientRect().left;
+    cursor.style.left = letterArray[0].getBoundingClientRect().left - 1.65 + "px";
+    cursor.style.top  = letterArray[0].getBoundingClientRect().top + "px";
     cursor.classList.add("blinking");
     cursor.classList.remove("hidden");
 }
@@ -52,21 +53,15 @@ const alphaNumeric = /(Key[A-Z])|(Digit[0-9])|(Space)/i;
 cursorPosition = cursorPosition.substring(0, cursorPosition.length - 2);
 cursorPosition = parseFloat(cursorPosition);
 
-// console.log(cursorPosition);
-
 document.addEventListener('keydown', (k) => {
     if (k.code == "Escape" || k.code == "Tab") {
         k.preventDefault();
         spinAndRestart();
     } else if (k.code.match(alphaNumeric)) {
-        // console.log(cursorIndex);
         cursor.classList.remove("blinking");
-        console.log(cursorPosition);
         cursorIndex++;
-        cursorPosition = letterArray[cursorIndex].getBoundingClientRect().left - 6.905;
-        // cursorPosition += 15.61;
-        cursor.style.left = cursorPosition + "px";
-        
+        cursor.style.left = letterArray[cursorIndex].getBoundingClientRect().left - 1.65 + "px";
+        cursor.style.top = letterArray[cursorIndex].getBoundingClientRect().top + "px";
     }
 });
 
@@ -93,7 +88,6 @@ function spinAndRestart() {
     newTextArea.classList = "text-area-container";
     textAreaDiv.appendChild(newTextArea);
     textArea = document.querySelector(".text-area-container");
-    cursor.style.left = "302.5px";
     populateTextField();
 }
 
