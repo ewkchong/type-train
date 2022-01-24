@@ -25,6 +25,16 @@ header {
     text-align: center;
 }
 
+#cursor {
+    position: absolute;
+    height: 33px;
+    width: 3px;
+    border-radius: 20%;
+    background-color: black;
+    will-change: left;
+    transition: left 0.17s ease;
+}
+
 .text-area {
     display: flex;
     justify-content: space-around;
@@ -34,6 +44,7 @@ header {
     margin-right: 14.75rem;
     min-height: 5rem;
     max-height: 132px;
+    user-select: none;
 }
 
 .text-area-container {
@@ -139,12 +150,6 @@ footer .settings-label {
     user-select: none;
 }
 
-.cursor {
-    position: absolute;
-    font-weight: 100;
-    font-size: 23px;
-    color: black;
-}
 
 @keyframes blinking {
     0% {opacity: 1;}
@@ -193,10 +198,3 @@ footer .settings-label {
 .profile-icon:hover {
     cursor: pointer;
 }
-
-
-
-
-
-
-
