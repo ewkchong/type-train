@@ -18,6 +18,7 @@ body {
 header {
     display: flex;
     flex-direction: column;
+    
 }
 
 .center-text {
@@ -156,9 +157,39 @@ footer .settings-label {
     animation: blinking 1s linear infinite;
 }
 
+.hidden {
+    display: none !important;
+}
 
-.letter {
-    /* width: 16px; */
+
+
+.profile .dd_menu {
+    top: 47px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0px 0px 3px rgba(0,0,0,0.25);
+    visibility: hidden;
 
 }
 
+.option {
+    text-align: center;
+}
+
+.option:hover {
+    background-color: rgb(228, 228, 228);
+}
+
+.radio {
+    display: none;
+}
+
+.profile .dd_menu.active {
+    visibility: visible;
+
+  
+}
+
+.profile-icon:hover {
+    cursor: pointer;
+}
