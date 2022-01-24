@@ -1,9 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&family=Source+Code+Pro&display=swap');
 
+:root {
+    --primary-bg-colour: rgb(228, 228, 228);
+    --secondary-bg-colour: rgb(199, 199, 199);
+    --incomplete-word: #8a8a8a;
+    --complete-word: #88FF88; 
+}
 
 body {
     font-family: 'Source Code Pro'; 
-    background-color: rgb(228, 228, 228);
+    background-color: var(--primary-bg-colour);
     display: flex;
     flex-direction: column;
     min-height: 98vh;
@@ -26,15 +32,17 @@ header {
     padding: 2rem 4rem 2rem 4rem;
     margin-left: 14.75rem;
     margin-right: 14.75rem;
-    min-height: 10rem;
+    min-height: 5rem;
+    max-height: 132px;
 }
 
 .text-area-container {
-    font-family: 'Source Code Pro', 'Comic Sans MS';
+    font-family: 'Source Code Pro', monospace;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     font-size: 26px;
+    overflow: hidden;
 }
 
 @keyframes fade-in {
@@ -45,13 +53,12 @@ header {
 .text-area-container div.word {
     display: flex;
     flex-wrap: nowrap;
-    margin-right: 0.975625rem;
     text-align: center;
     animation: fade-in 1s;
-    color: #8a8a8a;
+    color: var(--incomplete-word);
 }
 .complete {
-    color: #88FF88;
+    color: var(--complete-word);
 }
 
 .profile {
@@ -63,8 +70,6 @@ header {
 
 .profile-icon {
     align-self: center;
-    width: 60px;
-    height: 60px;
 }
 
 .profile-links {
@@ -80,7 +85,7 @@ h4 {
 footer {
     display: flex;
     margin-top: auto;
-    background-color: rgb(199, 199, 199);
+    background-color: var(--secondary-bg-colour);
 }
 
 footer a {
@@ -100,6 +105,8 @@ footer .settings-label {
     border-radius: 5px;
     background-color: transparent;
     transition: background-color 0.3s ease-in-out;
+    user-select: none;
+    -webkit-user-drag: none;
 }
 
 .refresh-button-hover {
@@ -115,6 +122,8 @@ footer .settings-label {
     display: block;
     width: 50px;
     height: 50px;
+    user-select: none;
+    -webkit-user-drag: none;
 }
 
 @keyframes spin {
@@ -126,6 +135,31 @@ footer .settings-label {
     animation: spin 1s ease-in-out 0s;
 }
 
+.refresh-instructions {
+    user-select: none;
+}
+
+.cursor {
+    position: absolute;
+    font-weight: 100;
+    font-size: 23px;
+    color: black;
+}
+
+@keyframes blinking {
+    0% {opacity: 1;}
+    40% {opacity: 1;}
+    60% {opacity: 0;}
+    100% {opacity: 0;}
+}
+
+.blinking {
+    animation: blinking 1s linear infinite;
+}
+
+.hidden {
+    display: none !important;
+}
 
 
 
