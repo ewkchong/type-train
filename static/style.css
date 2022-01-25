@@ -32,7 +32,7 @@ header {
     border-radius: 20%;
     background-color: black;
     will-change: left;
-    transition: left 0.17s ease;
+    transition: left 0.09s ease-out;
 }
 
 .text-area {

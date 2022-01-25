@@ -1,24 +1,28 @@
-import WordGenerator from './WordGenerator.js';
+import WordGenerator from './modules/WordGenerator.js';
+import Cursor from './modules/Cursor.js';
 
 let textArea = document.querySelector(".text-area-container");
 const textAreaDiv = document.querySelector(".text-area");
-const cursor = document.querySelector("#cursor");
+const profileIcon = document.getElementById("profile");
+const ddMenu = document.querySelector(".dd_menu");
+const refreshButton = document.querySelector(".refresh-button");
+const refreshButtonImage = document.querySelector("#refresh-button-image");
 
 let wordGen = new WordGenerator({});
 let JSONready = false;
 
-let letterArray = [];
-let cursorPosition = "308.349975px";
-let cursorIndex = 0;
+const letterArray = [];
+const cursor = new Cursor(letterArray, document.getElementById('cursor'));
+
+document.onload = populateTextField();
 
 async function populateTextField() {
-    letterArray = [];
-    cursorIndex = 0;
+    letterArray.splice(0, letterArray.length);
     if (!JSONready) {
         await wordGen.storeJSON();
         JSONready = true;
     }
-
+    
     let wordArr = wordGen.generate(80);
     
     for (let i = 0; i < wordArr.length; i++) {
@@ -41,33 +45,38 @@ async function populateTextField() {
     for (let letter of document.querySelectorAll(".letter")) {
         letterArray.push(letter);
     }
-    cursor.style.left = letterArray[0].getBoundingClientRect().left - 1.65 + "px";
-    cursor.style.top  = letterArray[0].getBoundingClientRect().top + "px";
-    cursor.classList.add("blinking");
-    cursor.classList.remove("hidden");
+    cursor.resetIndex();
+    cursor.updatePosition();
+    cursor.blink();
+    cursor.unhide();
+};
+
+function spinAndRestart() {
+    refreshButtonImage.classList.remove("spin-arrow");
+    void refreshButtonImage.offsetWidth;
+    refreshButtonImage.classList.add("spin-arrow");
+    
+    textArea.remove();
+    
+    const newTextArea = document.createElement("div");
+    newTextArea.classList = "text-area-container";
+    textAreaDiv.appendChild(newTextArea);
+    textArea = document.querySelector(".text-area-container");
+    populateTextField();
 }
 
-populateTextField();
-
-const alphaNumeric = /(Key[A-Z])|(Digit[0-9])|(Space)/i;
-cursorPosition = cursorPosition.substring(0, cursorPosition.length - 2);
-cursorPosition = parseFloat(cursorPosition);
-
 document.addEventListener('keydown', (k) => {
+    const alphaNumeric = /(Key[A-Z])|(Digit[0-9])|(Space)/i;
     if (k.code == "Escape" || k.code == "Tab") {
         k.preventDefault();
         spinAndRestart();
     } else if (k.code.match(alphaNumeric)) {
-        cursor.classList.remove("blinking");
-        cursorIndex++;
-        cursor.style.left = letterArray[cursorIndex].getBoundingClientRect().left - 1.65 + "px";
-        cursor.style.top = letterArray[cursorIndex].getBoundingClientRect().top + "px";
+        cursor.blinkOff();
+        cursor.incrementIndex();
+        cursor.updatePosition();
     }
 });
 
-
-const refreshButton = document.querySelector(".refresh-button");
-const refreshButtonImage = document.querySelector("#refresh-button-image");
 
 refreshButton.addEventListener("mouseenter", () => {
     refreshButton.classList.add("refresh-button-hover");
@@ -76,20 +85,6 @@ refreshButton.addEventListener("mouseenter", () => {
 refreshButton.addEventListener("mouseleave", () => {
     refreshButton.classList.remove("refresh-button-hover");
 });
-
-function spinAndRestart() {
-    refreshButtonImage.classList.remove("spin-arrow");
-    void refreshButtonImage.offsetWidth;
-    refreshButtonImage.classList.add("spin-arrow");
-
-    textArea.remove();
-        
-    const newTextArea = document.createElement("div");
-    newTextArea.classList = "text-area-container";
-    textAreaDiv.appendChild(newTextArea);
-    textArea = document.querySelector(".text-area-container");
-    populateTextField();
-}
 
 refreshButton.addEventListener("click", () => {
     spinAndRestart();
@@ -102,10 +97,6 @@ refreshButton.addEventListener("mousedown", () => {
 refreshButton.addEventListener("mouseup", () => {
     refreshButton.classList.remove("refresh-button-clicked");
 })
-
-
-const profileIcon = document.getElementById("profile");
-const ddMenu = document.querySelector(".dd_menu");
 
 profileIcon.addEventListener("click", function() {
     ddMenu.classList.toggle("active");
