@@ -167,7 +167,16 @@ footer .settings-label {
     display: none !important;
 }
 
+.profile {
+    display: flex;
+    flex-direction: column;
+}
 
+.profile i {
+    align-self: flex-end;
+    margin-right: 1.5rem;
+    margin-top: 1.5rem;
+}
 
 .profile .dd_menu {
     top: 47px;
@@ -192,10 +201,10 @@ footer .settings-label {
 
 .profile .dd_menu.active {
     visibility: visible;
-
-  
 }
 
 .profile-icon:hover {
     cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s ease-in-out;
 }
