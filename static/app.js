@@ -5,7 +5,6 @@ let textArea = document.querySelector(".text-area-container");
 const textAreaDiv = document.querySelector(".text-area");
 const profileIcon = document.getElementById("profile");
 const ddMenu = document.querySelector(".dd_menu");
-const refreshButton = document.querySelector(".refresh-button");
 const refreshButtonImage = document.querySelector("#refresh-button-image");
 
 let wordGen = new WordGenerator({});
@@ -65,6 +64,30 @@ function spinAndRestart() {
     populateTextField();
 }
 
+(function() {
+    const refreshButton = document.querySelector(".refresh-button");
+
+    refreshButton.addEventListener("mouseenter", () => {
+        refreshButton.classList.add("refresh-button-hover");
+    });
+    
+    refreshButton.addEventListener("mouseleave", () => {
+        refreshButton.classList.remove("refresh-button-hover");
+    });
+    
+    refreshButton.addEventListener("click", () => {
+        spinAndRestart();
+    })
+    
+    refreshButton.addEventListener("mousedown", () => {
+        refreshButton.classList.add("refresh-button-clicked");
+    });
+    
+    refreshButton.addEventListener("mouseup", () => {
+        refreshButton.classList.remove("refresh-button-clicked");
+    })
+})();
+
 document.addEventListener('keydown', (k) => {
     const alphaNumeric = /(Key[A-Z])|(Digit[0-9])|(Space)/i;
     if (k.code == "Escape" || k.code == "Tab") {
@@ -77,26 +100,10 @@ document.addEventListener('keydown', (k) => {
     }
 });
 
+window.addEventListener('resize', () => {
+    cursor.updatePosition();
+}, true);
 
-refreshButton.addEventListener("mouseenter", () => {
-    refreshButton.classList.add("refresh-button-hover");
-});
-
-refreshButton.addEventListener("mouseleave", () => {
-    refreshButton.classList.remove("refresh-button-hover");
-});
-
-refreshButton.addEventListener("click", () => {
-    spinAndRestart();
-})
-
-refreshButton.addEventListener("mousedown", () => {
-    refreshButton.classList.add("refresh-button-clicked");
-});
-
-refreshButton.addEventListener("mouseup", () => {
-    refreshButton.classList.remove("refresh-button-clicked");
-})
 
 profileIcon.addEventListener("click", function() {
     ddMenu.classList.toggle("active");

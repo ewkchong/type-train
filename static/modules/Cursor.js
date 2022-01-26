@@ -13,7 +13,7 @@ export default class Cursor {
     updatePosition() {
         let letterRect = this.letterArray[this.cursorIndex].getBoundingClientRect();
         this.cursorElement.style.left = letterRect.left - 1.65 + "px";
-        this.cursorElement.style.top  = letterRect.top + 5.5 + "px";
+        this.cursorElement.style.top  = letterRect.top + "px";
     }
 
     blink() {
