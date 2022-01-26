@@ -104,10 +104,9 @@ window.addEventListener('resize', () => {
     cursor.updatePosition();
 }, true);
 
-
-profileIcon.addEventListener("click", function() {
-    ddMenu.classList.toggle("active");
-})
+window.addEventListener('scroll', () => {
+    cursor.updatePosition();
+}, true);
 
 
 

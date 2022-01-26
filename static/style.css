@@ -32,8 +32,8 @@ header {
     border-radius: 20%;
     background-color: black;
     will-change: transform;
-    transform: translate3d(0,0,0);
-    transition: left 0.08s ease-out;
+    transition: transform 0.075s linear;
+    z-index: 150;
 }
 
 .text-area {
