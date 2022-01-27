@@ -1,12 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&family=Source+Code+Pro&display=swap');
-
-:root {
-    --primary-bg-colour: rgb(228, 228, 228);
-    --secondary-bg-colour: rgb(199, 199, 199);
-    --incomplete-word: #8a8a8a;
-    --complete-word: #88FF88;
-    --caret-colour: black;
-}
+@import url('variables.css');
 
 body {
     font-family: 'Source Code Pro'; 
@@ -38,7 +31,6 @@ header {
 }
 
 .text-area-container {
-    font-family: 'Source Code Pro', monospace;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;

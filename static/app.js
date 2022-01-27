@@ -3,8 +3,6 @@ import Cursor from './modules/Cursor.js';
 
 let textArea = document.querySelector(".text-area-container");
 const textAreaDiv = document.querySelector(".text-area");
-const profileIcon = document.getElementById("profile");
-const ddMenu = document.querySelector(".dd_menu");
 const refreshButtonImage = document.querySelector("#refresh-button-image");
 
 let wordGen = new WordGenerator({});
