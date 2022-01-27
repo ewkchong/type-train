@@ -4,7 +4,8 @@
     --primary-bg-colour: rgb(228, 228, 228);
     --secondary-bg-colour: rgb(199, 199, 199);
     --incomplete-word: #8a8a8a;
-    --complete-word: #88FF88; 
+    --complete-word: #88FF88;
+    --caret-colour: black;
 }
 
 body {
@@ -30,10 +31,19 @@ header {
     height: 33px;
     width: 3px;
     border-radius: 20%;
-    background-color: black;
+    background-color: var(--caret-colour);
     will-change: transform;
     transition: transform 0.075s linear;
     z-index: 150;
+}
+
+.text-area-container {
+    font-family: 'Source Code Pro', monospace;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    font-size: 26px;
+    overflow: hidden;
 }
 
 .text-area {
@@ -46,15 +56,6 @@ header {
     min-height: 5rem;
     max-height: 132px;
     user-select: none;
-}
-
-.text-area-container {
-    font-family: 'Source Code Pro', monospace;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    font-size: 26px;
-    overflow: hidden;
 }
 
 @keyframes fade-in {
@@ -80,14 +81,42 @@ header {
     flex-direction: column;
 }
 
-.profile-icon {
-    align-self: center;
+.profile #profile-icon {
+    align-self: flex-end;
+    margin-right: 1.5rem;
+    margin-top: 1.5rem;
+    opacity: 0.55;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.profile i {
+    align-self: flex-end;
+    opacity: 0.55;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.profile i:hover, #profile-icon:hover {
+    cursor: pointer;
+    opacity: 1;
 }
 
 .profile-links {
-    display: flex;
+    display: none;
     flex-direction: column;
-    text-align: center;
+}
+
+.dd-menu-item {
+    display: flex;
+    text-align: right;
+    justify-content: flex-end;
+    margin: 1.5rem 1.5rem 1.5rem auto;
+}
+
+.dd-menu-item span {
+    user-select: none;
+    align-self: center;
+    margin-right: 1rem;
+    visibility: hidden;
 }
 
 h4 {
@@ -167,44 +196,7 @@ footer .settings-label {
     display: none !important;
 }
 
-.profile {
-    display: flex;
-    flex-direction: column;
+.blur {
+    filter: blur(4px) !important;
 }
 
-.profile i {
-    align-self: flex-end;
-    margin-right: 1.5rem;
-    margin-top: 1.5rem;
-}
-
-.profile .dd_menu {
-    top: 47px;
-    background: white;
-    border-radius: 15px;
-    box-shadow: 0px 0px 3px rgba(0,0,0,0.25);
-    visibility: hidden;
-
-}
-
-.option {
-    text-align: center;
-}
-
-.option:hover {
-    background-color: rgb(228, 228, 228);
-}
-
-.radio {
-    display: none;
-}
-
-.profile .dd_menu.active {
-    visibility: visible;
-}
-
-.profile-icon:hover {
-    cursor: pointer;
-    opacity: 0.7;
-    transition: opacity 0.2s ease-in-out;
-}

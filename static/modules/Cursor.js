@@ -22,7 +22,7 @@ export default class Cursor {
         let currTop = parseFloat(topStr);
 
         this.cursorElement.style.transform = `translateX(${newLeft - currLeft}px) translateY(${newTop - currTop}px)`
-        window.requestAnimationFrame(this.updatePosition);
+        window.requestAnimationFrame(() => {return});
     }
 
     blink() {
@@ -43,6 +43,12 @@ export default class Cursor {
     
     incrementIndex() {
         this.cursorIndex++;
+    }
+
+    decrementIndex() {
+        if (this.cursorIndex != 0) {
+            this.cursorIndex--;
+        }    
     }
 
     resetIndex() {
