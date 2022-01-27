@@ -89,13 +89,17 @@ function spinAndRestart() {
 })();
 
 document.addEventListener('keydown', (k) => {
-    const alphaNumeric = /(Key[A-Z])|(Digit[0-9])|(Space)/i;
+    const alphaNumeric = /^((Key[A-Z])|(Digit[0-9])|(Space)|(Quote))$/i;
     if (k.code == "Escape" || k.code == "Tab") {
         k.preventDefault();
         spinAndRestart();
-    } else if (k.code.match(alphaNumeric)) {
+    } else if (alphaNumeric.test(k.code)) {
         cursor.blinkOff();
         cursor.incrementIndex();
+        cursor.updatePosition();
+    } else if (k.code == "Backspace") {
+        cursor.blinkOff();
+        cursor.decrementIndex();
         cursor.updatePosition();
     }
 });
@@ -104,10 +108,9 @@ window.addEventListener('resize', () => {
     cursor.updatePosition();
 }, true);
 
-
-profileIcon.addEventListener("click", function() {
-    ddMenu.classList.toggle("active");
-})
+window.addEventListener('scroll', () => {
+    cursor.updatePosition();
+}, true);
 
 
 

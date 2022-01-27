@@ -12,8 +12,17 @@ export default class Cursor {
 
     updatePosition() {
         let letterRect = this.letterArray[this.cursorIndex].getBoundingClientRect();
-        this.cursorElement.style.left = letterRect.left - 1.65 + "px";
-        this.cursorElement.style.top  = letterRect.top + "px";
+        let newLeft = letterRect.left - 1.65;
+        let newTop  = letterRect.top;
+        let leftStr = this.cursorElement.style.left;
+        let topStr = this.cursorElement.style.top;
+        leftStr = leftStr.substr(0, leftStr.length - 2);
+        topStr = topStr.substr(0, topStr.length - 2);
+        let currLeft = parseFloat(leftStr);
+        let currTop = parseFloat(topStr);
+
+        this.cursorElement.style.transform = `translateX(${newLeft - currLeft}px) translateY(${newTop - currTop}px)`
+        window.requestAnimationFrame(() => {return});
     }
 
     blink() {
@@ -34,6 +43,12 @@ export default class Cursor {
     
     incrementIndex() {
         this.cursorIndex++;
+    }
+
+    decrementIndex() {
+        if (this.cursorIndex != 0) {
+            this.cursorIndex--;
+        }    
     }
 
     resetIndex() {
