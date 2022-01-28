@@ -1,6 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&family=Source+Code+Pro&display=swap');
 @import url('variables.css');
 
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
 body {
     font-family: 'Source Code Pro', monospace;
     background-color: var(--primary-bg-colour);
@@ -77,10 +82,11 @@ a {
 footer {
     display: flex;
     margin-top: auto;
+    transform: translateY(1rem);
     background-color: var(--secondary-bg-colour);
 }
 
 footer a {
-    margin-right: 2rem;
+    margin: 1rem;
 }
 
