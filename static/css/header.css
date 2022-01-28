@@ -28,11 +28,11 @@ a {
     align-self: flex-end;
     display: flex;
     flex-direction: column;
+    margin-right: 1.5rem;
 }
 
 .profile #profile-icon {
     align-self: flex-end;
-    margin-right: 1.5rem;
     margin-top: 1.5rem;
     opacity: 0.55;
     transition: opacity 0.2s ease-in-out;
@@ -54,18 +54,24 @@ a {
     flex-direction: column;
 }
 
+.profile:hover .dd-menu-item {
+    opacity: 1;
+}
+
 .dd-menu-item {
+    opacity: 0;
     display: flex;
     text-align: right;
     justify-content: flex-end;
-    margin: 1.5rem 1.5rem 1.5rem auto;
+    margin-top: 1.5rem;
+    transition: opacity 275ms ease;
 }
 
 .dd-menu-item span {
     user-select: none;
     align-self: center;
     margin-right: 1rem;
-    visibility: hidden;
+    display: none;
 }
 
 footer {
