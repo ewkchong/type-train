@@ -81,8 +81,9 @@ a {
 
 footer {
     display: flex;
-    margin-top: auto;
-    transform: translateY(1rem);
+    width: 100%;
+    position: absolute;
+    bottom: 0;
     background-color: var(--secondary-bg-colour);
 }
 
