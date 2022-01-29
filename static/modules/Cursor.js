@@ -1,13 +1,12 @@
 export default class Cursor {
     cursorElement = null;
     letterArray = null;
-    cursorWidth = 0;
     cursorIndex = 0;
 
-    constructor(letterArray, cursorElement) {
-        this.cursorElement = cursorElement;
-        this.cursorWidth = cursorElement.getBoundingClientRect().width;
+    constructor(letterArray) {
+        this.cursorElement = document.getElementById('cursor');
         this.letterArray = letterArray;
+        this.cursorIndex = 0;
     }
 
     updatePosition() {

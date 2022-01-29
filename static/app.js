@@ -1,19 +1,18 @@
 import WordGenerator from './modules/WordGenerator.js';
 import Cursor from './modules/Cursor.js';
+import * as Refresh from './modules/Refresh.js'
 
 let textArea = document.querySelector(".text-area-container");
-const textAreaDiv = document.querySelector(".text-area");
-const refreshButtonImage = document.querySelector("#refresh-button-image");
-
 let wordGen = new WordGenerator({});
 let JSONready = false;
 
 const letterArray = [];
-const cursor = new Cursor(letterArray, document.getElementById('cursor'));
+const cursor = new Cursor(letterArray);
 
 document.onload = populateTextField();
+Refresh.addListeners();
 
-async function populateTextField() {
+export async function populateTextField() {
     letterArray.splice(0, letterArray.length);
     if (!JSONready) {
         await wordGen.storeJSON();
@@ -48,43 +47,21 @@ async function populateTextField() {
     cursor.unhide();
 };
 
-function spinAndRestart() {
-    refreshButtonImage.classList.remove("spin-arrow");
-    void refreshButtonImage.offsetWidth;
-    refreshButtonImage.classList.add("spin-arrow");
-    
+export function spinAndRestart() {
+    Refresh.spinArrow();
+
+    clearTextArea();
+    populateTextField();
+}
+
+function clearTextArea() {
     textArea.remove();
-    
+    const textAreaDiv = document.querySelector(".text-area");
     const newTextArea = document.createElement("div");
     newTextArea.classList = "text-area-container";
     textAreaDiv.appendChild(newTextArea);
     textArea = document.querySelector(".text-area-container");
-    populateTextField();
 }
-
-(function() {
-    const refreshButton = document.querySelector(".refresh-button");
-
-    refreshButton.addEventListener("mouseenter", () => {
-        refreshButton.classList.add("refresh-button-hover");
-    });
-    
-    refreshButton.addEventListener("mouseleave", () => {
-        refreshButton.classList.remove("refresh-button-hover");
-    });
-    
-    refreshButton.addEventListener("click", () => {
-        spinAndRestart();
-    })
-    
-    refreshButton.addEventListener("mousedown", () => {
-        refreshButton.classList.add("refresh-button-clicked");
-    });
-    
-    refreshButton.addEventListener("mouseup", () => {
-        refreshButton.classList.remove("refresh-button-clicked");
-    })
-})();
 
 document.addEventListener('keydown', (k) => {
     const alphaNumeric = /^((Key[A-Z])|(Digit[0-9])|(Space)|(Quote))$/i;
