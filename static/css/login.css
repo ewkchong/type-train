@@ -10,7 +10,6 @@ body {
 .input-field {
     display: flex;
     flex-direction: column;
-    width: 50%;
     font-family: 'Source Code Pro', monospace;
     background-color: var(--secondary-bg-colour);
     border-radius: 15px;
@@ -35,23 +34,24 @@ body {
 
 ::placeholder {
     color: black;
+    opacity: 0.4;
 }
 
 .input-field:focus {
-    outline: none !important;
+    outline: none;
 }
 
 .login-button, .register-button {
     background-color: transparent;
     border-radius: 10px;
     font-family: 'Source Code Pro', monospace;
+    font-size: 1rem;
     color: black;
     align-self: center;
-    border-color: var(--primary-bg-colour);
-    margin-top: 15px;
     transition: background-color 0.3s ease-in-out;
-    padding: 7.5px;
-    
+    padding: 1rem;
+    border-style: none; 
+
 
 }
 
@@ -62,18 +62,17 @@ body {
 
 #forgot-password {
     font-size: 10px;
-
-}
-
-#forgot-password, .login-button {
-    flex-direction: column;
-
+    position: relative;
+    left: 150px;
+    
 }
 
 .register-button {
+    margin-top: 15px;
     margin-bottom: 35px;
 
 }
+
 
 
 

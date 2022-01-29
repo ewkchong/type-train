@@ -2,6 +2,7 @@
     --primary-bg-colour: rgb(228, 228, 228);
     --secondary-bg-colour: rgb(199, 199, 199);
     --incomplete-word: #8a8a8a;
-    --complete-word: #88FF88;
+    --complete-word: black;
+    --incorrect-word: red;
     --caret-colour: black;
 }
