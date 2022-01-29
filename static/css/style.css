@@ -61,6 +61,14 @@ body {
     color: var(--complete-word);
 }
 
+.incorrect {
+    color: var(--incorrect-word);
+}
+
+.incorrect-space {
+    text-decoration: underline solid red;
+}
+
 h4 {
     margin: 0 !important;
 }

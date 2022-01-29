@@ -63,18 +63,53 @@ function clearTextArea() {
     textArea = document.querySelector(".text-area-container");
 }
 
+function checkLetter(code) {
+    const i = cursor.getIndex();
+
+    if (letterArray[i].innerHTML == "&nbsp;") {
+        if (code == "Space") {
+            letterArray[i].classList.add('correct');
+        } else {
+            letterArray[i].classList.add('incorrect-space');
+        }
+    } else {
+        if (code == "Space") {
+            letterArray[i].classList.add('incorrect');
+        } else if (code.charAt(code.length-1).toLowerCase() != letterArray[i].textContent) {
+            letterArray[i].classList.add('incorrect');
+        } else {
+            letterArray[i].classList.add('complete');
+
+        }
+    }
+}
+
+function eraseLetter() {
+    const i = cursor.getIndex();
+    if (letterArray[i].classList.contains('complete')) {
+        letterArray[i].classList.remove('complete');
+    }
+    letterArray[i].classList.remove('complete');
+    letterArray[i].classList.remove('incorrect');
+    letterArray[i].classList.remove('incorrect-space');
+    
+}
+
 document.addEventListener('keydown', (k) => {
-    const alphaNumeric = /^((Key[A-Z])|(Digit[0-9])|(Space)|(Quote))$/i;
+    const alphaNumeric = /^((Key[A-Z])|(Digit[0-9])|(Space))$/i;
     if (k.code == "Escape" || k.code == "Tab") {
         k.preventDefault();
         spinAndRestart();
     } else if (alphaNumeric.test(k.code)) {
         cursor.blinkOff();
+
+        checkLetter(k.code);
         cursor.incrementIndex();
         cursor.updatePosition();
     } else if (k.code == "Backspace") {
         cursor.blinkOff();
         cursor.decrementIndex();
+        eraseLetter();
         cursor.updatePosition();
     }
 });
