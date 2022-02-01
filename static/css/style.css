@@ -37,9 +37,9 @@ body {
     display: flex;
     justify-content: space-around;
     border: 2px black solid; 
-    padding: 2rem 4rem 2rem 4rem;
-    margin-left: 14.75rem;
-    margin-right: 14.75rem;
+    padding: 3vw 5vw 3vw 5vw;
+    margin-left: 13vw;
+    margin-right: 13vw;
     min-height: 5rem;
     max-height: 132px;
     user-select: none;
