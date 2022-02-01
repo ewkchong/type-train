@@ -21,7 +21,7 @@ body {
     border-radius: 20%;
     background-color: var(--caret-colour);
     will-change: transform;
-    transition: transform 70ms linear;
+    transition: transform 105ms ease-in-out;
     z-index: 150;
 }
 
