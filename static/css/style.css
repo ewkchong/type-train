@@ -150,3 +150,9 @@ footer .settings-label {
     filter: blur(4px) !important;
 }
 
+.timer {
+    width: auto;
+    position: relative;
+
+}
+
