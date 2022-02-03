@@ -153,6 +153,7 @@ footer .settings-label {
 .timer {
     width: auto;
     position: relative;
-
+    margin-right: 13vw;
+    margin-left: auto;
 }
 

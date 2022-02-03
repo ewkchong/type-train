@@ -1,6 +1,7 @@
 import WordGenerator from './modules/WordGenerator.js';
 import Cursor from './modules/Cursor.js';
-import * as Refresh from './modules/Refresh.js'
+import * as Refresh from './modules/Refresh.js';
+import Timer from './modules/Timer.js';
 
 let textArea = document.querySelector(".text-area-container");
 let wordGen = new WordGenerator({});
@@ -9,6 +10,7 @@ let JSONready = false;
 const letterArray = [];
 const wordArray = [];
 const cursor = new Cursor(letterArray);
+const timer = new Timer(300);
 
 document.onload = populateTextField();
 Refresh.addListeners();
@@ -49,7 +51,7 @@ export async function populateTextField() {
     cursor.updatePosition();
     cursor.blink();
     cursor.unhide();
-};
+}
 
 export function spinAndRestart() {
     Refresh.spinArrow();
