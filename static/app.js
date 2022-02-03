@@ -7,6 +7,7 @@ let wordGen = new WordGenerator({});
 let JSONready = false;
 
 const letterArray = [];
+const wordArray = [];
 const cursor = new Cursor(letterArray);
 
 document.onload = populateTextField();
@@ -40,6 +41,9 @@ export async function populateTextField() {
     }
     for (let letter of document.querySelectorAll(".letter")) {
         letterArray.push(letter);
+    }
+    for (let word of document.querySelectorAll(".word")) {
+        wordArray.push(word);
     }
     cursor.resetIndex();
     cursor.updatePosition();
@@ -86,13 +90,15 @@ function checkLetter(code) {
 
 function eraseLetter() {
     const i = cursor.getIndex();
-    if (letterArray[i].classList.contains('complete')) {
-        letterArray[i].classList.remove('complete');
+    const classList = letterArray[i].classList;
+    if (classList.contains('complete')) {
+        classList.remove('complete');
     }
-    letterArray[i].classList.remove('complete');
-    letterArray[i].classList.remove('incorrect');
-    letterArray[i].classList.remove('incorrect-space');
-    
+
+    if (classList.contains('incorrect') || classList.contains('incorrect-space')) {
+        letterArray[i].classList.remove('incorrect');
+        letterArray[i].classList.remove('incorrect-space');
+    }     
 }
 
 document.addEventListener('keydown', (k) => {
