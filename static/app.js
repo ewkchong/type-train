@@ -1,7 +1,7 @@
 import WordGenerator from './modules/WordGenerator.js';
 import Cursor from './modules/Cursor.js';
-import * as Refresh from './modules/Refresh.js';
 import Timer from './modules/Timer.js';
+import * as Refresh from './modules/Refresh.js';
 
 let textArea = document.querySelector(".text-area-container");
 let wordGen = new WordGenerator({});
@@ -10,10 +10,11 @@ let JSONready = false;
 const letterArray = [];
 const wordArray = [];
 const cursor = new Cursor(letterArray);
-const timer = new Timer(300);
+const timer = new Timer(30);
 
 document.onload = populateTextField();
 Refresh.addListeners();
+timer.updateTimer();
 
 export async function populateTextField() {
     letterArray.splice(0, letterArray.length);
@@ -55,6 +56,7 @@ export async function populateTextField() {
 
 export function spinAndRestart() {
     Refresh.spinArrow();
+    timer.resetTimer();
 
     clearTextArea();
     populateTextField();
@@ -109,6 +111,9 @@ document.addEventListener('keydown', (k) => {
         k.preventDefault();
         spinAndRestart();
     } else if (alphaNumeric.test(k.code)) {
+        if (!timer.isActive()) {
+            timer.startTimer();
+        }
         cursor.blinkOff();
 
         checkLetter(k.code);
