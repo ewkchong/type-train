@@ -1,8 +1,4 @@
 export default class Cursor {
-    cursorElement = null;
-    letterArray = null;
-    cursorIndex = 0;
-
     constructor(letterArray) {
         this.cursorElement = document.getElementById('cursor');
         this.letterArray = letterArray;
@@ -15,21 +11,21 @@ export default class Cursor {
         let newTop  = letterRect.top;
         let leftStr = this.cursorElement.style.left;
         let topStr = this.cursorElement.style.top;
-        leftStr = leftStr.substr(0, leftStr.length - 2);
-        topStr = topStr.substr(0, topStr.length - 2);
+        leftStr = leftStr.substring(0, leftStr.length - 2);
+        topStr = topStr.substring(0, topStr.length - 2);
         let currLeft = parseFloat(leftStr);
         let currTop = parseFloat(topStr);
 
-        this.cursorElement.style.transform = `translateX(${newLeft - currLeft}px) translateY(${newTop - currTop}px)`
-        window.requestAnimationFrame(() => {return});
+        this.cursorElement.style.transform = `translateX(${newLeft - currLeft}px) translateY(${newTop - currTop}px)`;
+        window.requestAnimationFrame(() => {return;});
     }
 
     blink() {
-        this.cursorElement.classList.add("blinking")
+        this.cursorElement.classList.add("blinking");
     }
 
     blinkOff() {
-        this.cursorElement.classList.remove("blinking")
+        this.cursorElement.classList.remove("blinking");
     }
 
     unhide() {

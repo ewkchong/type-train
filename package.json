@@ -19,5 +19,8 @@
   "homepage": "https://github.com/ewkchong/typing-project#readme",
   "dependencies": {
     "firebase": "^9.6.2"
+  },
+  "jshintConfig": {
+    "esversion": 8
   }
 }

@@ -1,16 +1,20 @@
 import WordGenerator from './modules/WordGenerator.js';
 import Cursor from './modules/Cursor.js';
-import * as Refresh from './modules/Refresh.js'
+import Timer from './modules/Timer.js';
+import * as Refresh from './modules/Refresh.js';
 
 let textArea = document.querySelector(".text-area-container");
 let wordGen = new WordGenerator({});
 let JSONready = false;
 
 const letterArray = [];
+const wordArray = [];
 const cursor = new Cursor(letterArray);
+const timer = new Timer(30);
 
 document.onload = populateTextField();
 Refresh.addListeners();
+timer.updateTimer();
 
 export async function populateTextField() {
     letterArray.splice(0, letterArray.length);
@@ -41,14 +45,18 @@ export async function populateTextField() {
     for (let letter of document.querySelectorAll(".letter")) {
         letterArray.push(letter);
     }
+    for (let word of document.querySelectorAll(".word")) {
+        wordArray.push(word);
+    }
     cursor.resetIndex();
     cursor.updatePosition();
     cursor.blink();
     cursor.unhide();
-};
+}
 
 export function spinAndRestart() {
     Refresh.spinArrow();
+    timer.resetTimer();
 
     clearTextArea();
     populateTextField();
@@ -86,13 +94,15 @@ function checkLetter(code) {
 
 function eraseLetter() {
     const i = cursor.getIndex();
-    if (letterArray[i].classList.contains('complete')) {
-        letterArray[i].classList.remove('complete');
+    const classList = letterArray[i].classList;
+    if (classList.contains('complete')) {
+        classList.remove('complete');
     }
-    letterArray[i].classList.remove('complete');
-    letterArray[i].classList.remove('incorrect');
-    letterArray[i].classList.remove('incorrect-space');
-    
+
+    if (classList.contains('incorrect') || classList.contains('incorrect-space')) {
+        letterArray[i].classList.remove('incorrect');
+        letterArray[i].classList.remove('incorrect-space');
+    }     
 }
 
 document.addEventListener('keydown', (k) => {
@@ -101,6 +111,9 @@ document.addEventListener('keydown', (k) => {
         k.preventDefault();
         spinAndRestart();
     } else if (alphaNumeric.test(k.code)) {
+        if (!timer.isActive()) {
+            timer.startTimer();
+        }
         cursor.blinkOff();
 
         checkLetter(k.code);

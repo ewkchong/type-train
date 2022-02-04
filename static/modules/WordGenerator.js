@@ -1,14 +1,12 @@
 export default class WordGenerator {
-    options = {};
-    words = [];
-    readyToGenerate = false;
 
     constructor(options) {
         // keeping options default for now
         this.options = {
             lang: 'english250'
         };
-
+        this.words = [];
+        this.readyToGenerate = false;
     }
 
     async storeJSON() {
