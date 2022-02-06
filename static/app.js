@@ -128,11 +128,9 @@ export function removeTopRow() {
 
 document.addEventListener('keydown', (k) => {
     const alphaNumeric = /^((Key[A-Z])|(Digit[0-9])|(Space))$/i;
-    if (k.code == "Tab") {
+    if (k.code == "Escape" || k.code == "Tab") {
         k.preventDefault();
         spinAndRestart();
-    } else if (k.code == "Escape") {
-        removeTopRow();
     } else if (alphaNumeric.test(k.code)) {
         if (!timer.isActive()) {
             timer.startTimer();
