@@ -1,7 +1,9 @@
+import { removeTopRow } from "../app.js";
 export default class Cursor {
     constructor(letterArray) {
         this.cursorElement = document.getElementById('cursor');
         this.letterArray = letterArray;
+        this.topRow = "";
         this.cursorIndex = 0;
     }
 
@@ -18,6 +20,12 @@ export default class Cursor {
 
         this.cursorElement.style.transform = `translateX(${newLeft - currLeft}px) translateY(${newTop - currTop}px)`;
         window.requestAnimationFrame(() => {return;});
+
+        console.log(`cursor pos: ${newTop - currTop}, top row: ${this.topRow}`);
+        const cursorY = newTop - currTop;
+        if (cursorY < this.topRow + 70 && cursorY > this.topRow + 60) {
+            removeTopRow();
+        }
     }
 
     blink() {
@@ -48,5 +56,13 @@ export default class Cursor {
 
     resetIndex() {
         this.cursorIndex = 0;
+    }
+    
+    setIndex(i) {
+        this.cursorIndex = i; 
+    }
+
+    setTopRow(topRow) {
+        this.topRow = topRow;
     }
 }

@@ -23,7 +23,7 @@ export async function populateTextField() {
         JSONready = true;
     }
     
-    let wordArr = wordGen.generate(80);
+    let wordArr = wordGen.generate(500);
     
     for (let i = 0; i < wordArr.length; i++) {
         const word = document.createElement("div");
@@ -48,6 +48,7 @@ export async function populateTextField() {
     for (let word of document.querySelectorAll(".word")) {
         wordArray.push(word);
     }
+    cursor.setTopRow(letterArray[0].getBoundingClientRect().top);
     cursor.resetIndex();
     cursor.updatePosition();
     cursor.blink();
@@ -105,6 +106,26 @@ function eraseLetter() {
     }     
 }
 
+export function removeTopRow() {
+    let topRow = letterArray[0].getBoundingClientRect().top;
+    let i = 0;
+    while (letterArray[i].getBoundingClientRect().top === topRow) {
+        i++;
+    }
+    const j = i;
+    while (i--) {
+        letterArray[i].remove();
+    }
+    letterArray.splice(0, j);
+    i = 0;
+    topRow = letterArray[0].getBoundingClientRect().top;
+    while (letterArray[i].getBoundingClientRect().top === topRow) {
+        i++;
+    }
+    cursor.setIndex(i);
+    cursor.updatePosition();
+}
+
 document.addEventListener('keydown', (k) => {
     const alphaNumeric = /^((Key[A-Z])|(Digit[0-9])|(Space))$/i;
     if (k.code == "Escape" || k.code == "Tab") {
@@ -128,6 +149,7 @@ document.addEventListener('keydown', (k) => {
 });
 
 window.addEventListener('resize', () => {
+    cursor.setTopRow(letterArray[0].getBoundingClientRect().top);
     cursor.updatePosition();
 }, true);
 
