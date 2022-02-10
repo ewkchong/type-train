@@ -19,13 +19,13 @@ export default class Cursor {
         let currTop = parseFloat(topStr);
 
         this.cursorElement.style.transform = `translateX(${newLeft - currLeft}px) translateY(${newTop - currTop}px)`;
-        window.requestAnimationFrame(() => {return;});
-
-        console.log(`cursor pos: ${newTop - currTop}, top row: ${this.topRow}`);
         const cursorY = newTop - currTop;
         if (cursorY < this.topRow + 70 && cursorY > this.topRow + 60) {
             removeTopRow();
         }
+        
+        window.requestAnimationFrame(() => {return;});
+        // console.log(`cursor pos: ${newTop - currTop}, top row: ${this.topRow}`);
     }
 
     blink() {
