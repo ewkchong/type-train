@@ -72,12 +72,14 @@ function clearTextArea() {
     textArea = document.querySelector(".text-area-container");
 }
 
+
 function checkLetter(code) {
     const i = cursor.getIndex();
 
     if (letterArray[i].innerHTML == "&nbsp;") {
         if (code == "Space") {
             letterArray[i].classList.add('correct');
+
         } else {
             letterArray[i].classList.add('incorrect-space');
         }
