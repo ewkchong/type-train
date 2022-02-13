@@ -1,10 +1,11 @@
 export default class Timer {
-  constructor(seconds) {
+  constructor(seconds, train) {
     this.timerElement = document.querySelector('.timer');
     this.originalTime = seconds;
     this.timerSeconds = seconds;
     this.timer = null;
     this.timerActive = false;
+    this.train = train;
   }
 
   startTimer() {
@@ -14,6 +15,7 @@ export default class Timer {
       if (this.timerSeconds == 0 || this.timerSeconds < 1) {
         this.endTimer();
       }
+      console.log('timer be goin');
     }, 1000);
     this.timerActive = true;
   }
@@ -22,6 +24,7 @@ export default class Timer {
     const min = Math.floor(this.timerSeconds / 60);
     const sec = Math.floor(this.timerSeconds % 60);
     this.timerElement.textContent = `${min < 10 ? "0" : ""}${min}:${sec < 10 ? "0" : ""}${sec}`;
+    this.train.updateTrainPosition(1 - (this.timerSeconds / this.originalTime));
   }
 
   resetTimer() {

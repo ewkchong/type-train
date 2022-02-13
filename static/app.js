@@ -2,6 +2,7 @@ import WordGenerator from './modules/WordGenerator.js';
 import Cursor from './modules/Cursor.js';
 import Timer from './modules/Timer.js';
 import * as Refresh from './modules/Refresh.js';
+import Train from './modules/Train.js';
 
 let textArea = document.querySelector(".text-area-container");
 let wordGen = new WordGenerator({});
@@ -10,11 +11,13 @@ let JSONready = false;
 const letterArray = [];
 const wordArray = [];
 const cursor = new Cursor(letterArray);
-const timer = new Timer(30);
+const train = new Train();
+const timer = new Timer(30, train);
 
 document.onload = populateTextField();
 Refresh.addListeners();
 timer.updateTimer();
+train.updateTrainPosition();
 
 export async function populateTextField() {
     letterArray.splice(0, letterArray.length);
@@ -153,6 +156,7 @@ document.addEventListener('keydown', (k) => {
 window.addEventListener('resize', () => {
     cursor.setTopRow(letterArray[0].getBoundingClientRect().top);
     cursor.updatePosition();
+    train.resetDistance();
 }, true);
 
 window.addEventListener('scroll', () => {

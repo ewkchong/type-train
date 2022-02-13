@@ -45,6 +45,15 @@ body {
     user-select: none;
 }
 
+#train {
+    background-color: black;
+    width: 4rem;
+    height: 2rem;
+    margin-left: 13vw;
+    will-change: transform;
+    transition: transform 100ms ease-out;
+}
+
 @keyframes fade-in {
     from {opacity: 0;}
     to {opacity: 1;}
