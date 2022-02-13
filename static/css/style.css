@@ -45,6 +45,16 @@ body {
     user-select: none;
 }
 
+#train {
+    background-color: black;
+    width: 4rem;
+    height: 2rem;
+    margin-top: 1rem;
+    margin-left: 13vw;
+    will-change: transform;
+    transition: transform 100ms ease-out;
+}
+
 @keyframes fade-in {
     from {opacity: 0;}
     to {opacity: 1;}
@@ -153,6 +163,7 @@ footer .settings-label {
 .timer {
     width: auto;
     position: relative;
+    margin-top: 3.5rem;
     margin-right: 13vw;
     margin-left: auto;
 }

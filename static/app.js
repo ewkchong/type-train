@@ -2,6 +2,7 @@ import WordGenerator from './modules/WordGenerator.js';
 import Cursor from './modules/Cursor.js';
 import Timer from './modules/Timer.js';
 import * as Refresh from './modules/Refresh.js';
+import Train from './modules/Train.js';
 
 let textArea = document.querySelector(".text-area-container");
 let wordGen = new WordGenerator({});
@@ -10,20 +11,33 @@ let JSONready = false;
 const letterArray = [];
 const wordArray = [];
 const cursor = new Cursor(letterArray);
-const timer = new Timer(30);
+const train = new Train();
+const timer = new Timer(30, train);
 
 document.onload = populateTextField();
 Refresh.addListeners();
 timer.updateTimer();
+train.updateTrainPosition();
 
 export async function populateTextField() {
     letterArray.splice(0, letterArray.length);
+    wordArray.splice(0, wordArray.length);
     if (!JSONready) {
         await wordGen.storeJSON();
         JSONready = true;
     }
-    
-    let wordArr = wordGen.generate(500);
+
+    appendToTextField(80);
+
+    cursor.setTopRow(letterArray[0].getBoundingClientRect().top);
+    cursor.resetIndex();
+    cursor.updatePosition();
+    cursor.blink();
+    cursor.unhide();
+}
+
+function appendToTextField(numWords) {
+    let wordArr = wordGen.generate(numWords);
     
     for (let i = 0; i < wordArr.length; i++) {
         const word = document.createElement("div");
@@ -31,28 +45,19 @@ export async function populateTextField() {
         for (const char of wordArr[i]) {
             const letter = document.createElement("div");
             letter.classList = "letter";
+            letterArray.push(letter);
             letter.textContent = char;
             word.appendChild(letter);
         }
-        if (i < (wordArr.length - 1)) {
-            const space = document.createElement("div");
-            space.classList = "letter";
-            space.innerHTML = "&nbsp;";
-            word.appendChild(space);
-        }
+        const space = document.createElement("div");
+        space.classList = "letter";
+        space.innerHTML = "&nbsp;";
+        letterArray.push(space);
+        word.appendChild(space);
+        wordArray.push(word);
         textArea.appendChild(word);
     }
-    for (let letter of document.querySelectorAll(".letter")) {
-        letterArray.push(letter);
-    }
-    for (let word of document.querySelectorAll(".word")) {
-        wordArray.push(word);
-    }
-    cursor.setTopRow(letterArray[0].getBoundingClientRect().top);
-    cursor.resetIndex();
     cursor.updatePosition();
-    cursor.blink();
-    cursor.unhide();
 }
 
 export function spinAndRestart() {
@@ -130,7 +135,7 @@ export function removeTopRow() {
 
 document.addEventListener('keydown', (k) => {
     const alphaNumeric = /^((Key[A-Z])|(Digit[0-9])|(Space))$/i;
-    if (k.code == "Escape" || k.code == "Tab") {
+    if (k.code == "Tab") {
         k.preventDefault();
         spinAndRestart();
     } else if (alphaNumeric.test(k.code)) {
@@ -153,6 +158,7 @@ document.addEventListener('keydown', (k) => {
 window.addEventListener('resize', () => {
     cursor.setTopRow(letterArray[0].getBoundingClientRect().top);
     cursor.updatePosition();
+    train.resetDistance();
 }, true);
 
 window.addEventListener('scroll', () => {
