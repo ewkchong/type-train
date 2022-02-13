@@ -12,7 +12,10 @@ const letterArray = [];
 const wordArray = [];
 const cursor = new Cursor(letterArray);
 const train = new Train();
-const timer = new Timer(30, train);
+const timer = new Timer(5, train);
+let correctLetters = 0;
+let totalLetters = 0;
+let allowedToType = true;
 
 document.onload = populateTextField();
 Refresh.addListeners();
@@ -63,6 +66,10 @@ function appendToTextField(numWords) {
 export function spinAndRestart() {
     Refresh.spinArrow();
     timer.resetTimer();
+    setAllowedToType(true);
+
+    correctLetters = 0;
+    totalLetters = 0;
 
     clearTextArea();
     populateTextField();
@@ -84,21 +91,48 @@ function checkLetter(code) {
     if (letterArray[i].innerHTML == "&nbsp;") {
         if (code == "Space") {
             letterArray[i].classList.add('correct');
+            incrementCorrect();
 
         } else {
             letterArray[i].classList.add('incorrect-space');
+            totalLetters++;
         }
     } else {
         if (code == "Space") {
             letterArray[i].classList.add('incorrect');
+            totalLetters++;
         } else if (code.charAt(code.length-1).toLowerCase() != letterArray[i].textContent) {
             letterArray[i].classList.add('incorrect');
+            totalLetters++;
         } else {
             letterArray[i].classList.add('complete');
-
+            incrementCorrect();
         }
     }
+    // logAccuracy();
 }
+
+export function getLetterCount() {
+    return [correctLetters, totalLetters];
+}
+
+function logAccuracy() {
+    console.log(`${100 * (correctLetters / totalLetters)}%`);
+}
+
+function incrementCorrect() {
+    correctLetters++;
+    totalLetters++;
+}
+
+function removeCorrect() {
+    correctLetters--;
+}
+
+// Case1:typing everything is right backspace type incorrect letter --> decrement correct, 
+// Case2:" " type correct letter
+// Case3: typing, something is incorrect, backspace, type incorrect letter
+// Case4: " " tpye corrrect letter
 
 function eraseLetter() {
     const i = cursor.getIndex();
@@ -110,6 +144,10 @@ function eraseLetter() {
     if (classList.contains('incorrect') || classList.contains('incorrect-space')) {
         letterArray[i].classList.remove('incorrect');
         letterArray[i].classList.remove('incorrect-space');
+        
+    } else if (classList.contains('correct')) {
+        letterArray[i].classList.remove('correct');
+        removeCorrect();
     }     
 }
 
@@ -133,11 +171,19 @@ export function removeTopRow() {
     cursor.updatePosition();
 }
 
+export function setAllowedToType(bool) {
+    allowedToType = bool;
+} 
+
 document.addEventListener('keydown', (k) => {
     const alphaNumeric = /^((Key[A-Z])|(Digit[0-9])|(Space))$/i;
     if (k.code == "Tab") {
+        setAllowedToType(true);
         k.preventDefault();
         spinAndRestart();
+        
+    } else if (!allowedToType) {
+        return;
     } else if (alphaNumeric.test(k.code)) {
         if (!timer.isActive()) {
             timer.startTimer();
@@ -164,6 +210,9 @@ window.addEventListener('resize', () => {
 window.addEventListener('scroll', () => {
     cursor.updatePosition();
 }, true);
+
+
+
 
 
 
