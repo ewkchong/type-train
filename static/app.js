@@ -175,6 +175,16 @@ export function setAllowedToType(bool) {
     allowedToType = bool;
 } 
 
+function toggleTestHidden() {
+    let toggleHidden = (item) => {
+        item.classList.toggle('hidden')
+    };
+    toggleHidden(document.querySelector('.text-area'));
+    toggleHidden(document.querySelector('.timer'));
+    toggleHidden(document.getElementById('train'));
+    toggleHidden(document.getElementById('cursor'));
+}
+
 document.addEventListener('keydown', (k) => {
     const alphaNumeric = /^((Key[A-Z])|(Digit[0-9])|(Space))$/i;
     if (k.code == "Tab") {
@@ -184,6 +194,8 @@ document.addEventListener('keydown', (k) => {
         
     } else if (!allowedToType) {
         return;
+    } else if (k.code == "Escape") {
+        toggleTestHidden();
     } else if (alphaNumeric.test(k.code)) {
         if (!timer.isActive()) {
             timer.startTimer();
