@@ -1,11 +1,12 @@
-import { getLetterCount, setAllowedToType } from "../app.js";
+import { setAllowedToType } from "../app.js";
 export default class Timer {
-  constructor(seconds, train) {
+  constructor(seconds, train, stats) {
     this.timerElement = document.querySelector('.timer');
     this.totalTime = seconds;
     this.timerSeconds = seconds;
     this.timerActive = false;
     this.train = train;
+    this.stats = stats;
     this.originalTime = Date.now();
     this.currTime = Date.now();
   }
@@ -46,13 +47,15 @@ export default class Timer {
   }
 
   endTimer() {
-    const [correct, total] = getLetterCount();
+
+    // const [correct, total] = getLetterCount();
     this.pauseTimer();
     this.timerElement.textContent = "Choo Choo!";
-    const wordsPerMinute = (correct / 5) / (this.totalTime / 60); 
+    // const wordsPerMinute = (correct / 5) / (this.totalTime / 60); 
     setAllowedToType(false);
-    console.log(`Accuracy: ${100 * (correct / total)}%`);
-    console.log(`WPM: ${wordsPerMinute}wpm`);
+    // console.log(`Accuracy: ${100 * (correct / total)}%`);
+    // console.log(`WPM: ${wordsPerMinute}wpm`);
+    this.stats.calculateResult(this.totalTime);
   }
 
   isActive() {
