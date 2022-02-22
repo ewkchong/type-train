@@ -28,7 +28,8 @@ export default class Stats {
         this.startTime = Date.now();
     }
 
-    calculateResult(duration) {
+    calculateResult(endTime) {
+        const duration = (endTime - this.startTime) / 1000;
         const typedLetters = this.keystrokes.length;
         const excludedLetters = this.excluded.length;
         const totalLetters = typedLetters + excludedLetters;
@@ -46,6 +47,5 @@ export default class Stats {
         console.log(this.excluded);
     
         return [wordsPerMinute, accuracy];
-    
     }
 }

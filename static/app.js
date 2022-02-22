@@ -157,14 +157,28 @@ export function setAllowedToType(bool) {
     allowedToType = bool;
 } 
 
-function toggleTestHidden() {
+export function toggleTestHidden() {
     let toggleHidden = (item) => {
-        item.classList.toggle('hidden')
+        item.classList.toggle('hidden');
     };
     toggleHidden(document.querySelector('.text-area'));
     toggleHidden(document.querySelector('.timer'));
     toggleHidden(document.getElementById('train'));
     toggleHidden(document.getElementById('cursor'));
+    toggleHidden(document.getElementById('results'));
+}
+
+function showTest() {
+    let show = (item) => {
+        item.classList.remove('hidden');
+    }
+    show(document.querySelector('.text-area'));
+    show(document.querySelector('.timer'));
+    show(document.getElementById('train'));
+    show(document.getElementById('cursor'));
+    show(document.getElementById('results'));
+
+    document.getElementById('results').classList.add('hidden');
 }
 
 document.addEventListener('keydown', (k) => {
@@ -173,7 +187,7 @@ document.addEventListener('keydown', (k) => {
         setAllowedToType(true);
         k.preventDefault();
         spinAndRestart();
-        
+        showTest();
     } else if (!allowedToType) {
         return;
     } else if (k.code == "Escape") {

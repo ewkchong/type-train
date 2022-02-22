@@ -55,7 +55,7 @@ export default class Timer {
     setAllowedToType(false);
     // console.log(`Accuracy: ${100 * (correct / total)}%`);
     // console.log(`WPM: ${wordsPerMinute}wpm`);
-    this.stats.calculateResult(this.totalTime);
+    this.stats.calculateResult(Date.now());
   }
 
   isActive() {
