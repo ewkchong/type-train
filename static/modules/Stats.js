@@ -18,13 +18,34 @@ export default class Stats {
         this.excluded.push(this.keystrokes.pop());
     }
 
-    calculateResult(endTime) {
-        const duration = endTime - this.startTime;
-        const correctKeystrokes = this.keystrokes.filter((stroke) => stroke.correct);
-        const correctExcluded = this.excluded.filter((stroke) => stroke.correct);
-        const incorrectKeystrokeCount = this.keystrokes.length - correctKeystrokes.length;
-        const incorrectExcludedCount = this.excluded.length - correctExcluded.length;
+    setStartTime(time) {
+        this.startTime = time; 
+    }
 
-        const wordsPerMinute = (correctKeystrokes / 5) / (duration * 60000);
+    reset() {
+        this.keystrokes = [];
+        this.excluded = [];
+        this.startTime = Date.now();
+    }
+
+    calculateResult(endTime) {
+        const duration = (endTime - this.startTime) / 1000;
+        const typedLetters = this.keystrokes.length;
+        const excludedLetters = this.excluded.length;
+        const totalLetters = typedLetters + excludedLetters;
+        const uncorrectedErrors = this.keystrokes.filter((k) => k.correct == false).length;
+        const excludedErrors = this.excluded.filter((k) => k.correct == false).length;
+        
+        const wordsPerMinute = (((typedLetters - uncorrectedErrors) / 5) * 60) / duration;
+
+        const accuracy = ((totalLetters - uncorrectedErrors - excludedErrors) / totalLetters) * 100;
+
+        console.log(`WPM: ${wordsPerMinute}wpm`);
+        console.log(`accuracy: ${accuracy}%`);
+        console.log(`typed letters: ${typedLetters}, uncorrectedErrors: ${uncorrectedErrors}, totalLetters: ${totalLetters}`)
+        console.log(this.keystrokes);
+        console.log(this.excluded);
+    
+        return [wordsPerMinute, accuracy];
     }
 }

@@ -84,7 +84,7 @@ footer {
     width: 100%;
     position: absolute;
     bottom: 0;
-    background-color: var(--secondary-bg-colour);
+    background-color: var(--primary-bg-colour);
 }
 
 footer a {

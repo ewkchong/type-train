@@ -1,5 +1,41 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans&family=Source+Code+Pro&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&family=Source+Code+Pro&family=Roboto+Mono&display=swap');
 @import url('variables.css');
+
+.result-item {
+    margin-right: 5rem;
+}
+
+.result-text {
+    /* font-family: 'Roboto Mono' !important; */
+    font-size: 2.5rem;
+}
+
+@keyframes fade-in {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+#results {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: fade-in 2s;
+}
+
+#results-wrapper {
+    display: flex;
+}
+
+#graph {
+    width: 50%;
+    height: 200px;
+    border: 2px solid black;
+    text-align: center;
+}
+
+#results-title {
+    text-align: center;
+}
 
 
 

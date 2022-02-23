@@ -138,8 +138,17 @@ footer .settings-label {
 
 .refresh-instructions {
     user-select: none;
+    animation: fade-in 1s;
 }
 
+@keyframes fade-out {
+    from {opacity: 1;}
+    to {opacity: 0;}
+}
+
+.fade-out {
+    animation: fade-out 1s forwards;
+}
 
 @keyframes blinking {
     0% {opacity: 1;}

@@ -3,6 +3,7 @@ import Cursor from './modules/Cursor.js';
 import Timer from './modules/Timer.js';
 import * as Refresh from './modules/Refresh.js';
 import Train from './modules/Train.js';
+import Stats from './modules/Stats.js';
 
 let textArea = document.querySelector(".text-area-container");
 let wordGen = new WordGenerator({});
@@ -12,9 +13,8 @@ const letterArray = [];
 const wordArray = [];
 const cursor = new Cursor(letterArray);
 const train = new Train();
-const timer = new Timer(5, train);
-let correctLetters = 0;
-let totalLetters = 0;
+const stats = new Stats(Date.now());
+const timer = new Timer(5, train, stats);
 let allowedToType = true;
 
 document.onload = populateTextField();
@@ -66,10 +66,9 @@ function appendToTextField(numWords) {
 export function spinAndRestart() {
     Refresh.spinArrow();
     timer.resetTimer();
+    stats.reset();
     setAllowedToType(true);
-
-    correctLetters = 0;
-    totalLetters = 0;
+    showTest();
 
     clearTextArea();
     populateTextField();
@@ -91,48 +90,31 @@ function checkLetter(code) {
     if (letterArray[i].innerHTML == "&nbsp;") {
         if (code == "Space") {
             letterArray[i].classList.add('correct');
-            incrementCorrect();
+            // incrementCorrect();
+            stats.pushKeystroke(Date.now(), code, true);
 
         } else {
             letterArray[i].classList.add('incorrect-space');
-            totalLetters++;
+            // totalLetters++;
+            stats.pushKeystroke(Date.now(), code, false);
         }
     } else {
         if (code == "Space") {
             letterArray[i].classList.add('incorrect');
-            totalLetters++;
+            // totalLetters++;
+            stats.pushKeystroke(Date.now(), code, false);
         } else if (code.charAt(code.length-1).toLowerCase() != letterArray[i].textContent) {
             letterArray[i].classList.add('incorrect');
-            totalLetters++;
+            // totalLetters++;
+            stats.pushKeystroke(Date.now(), code, false);
         } else {
             letterArray[i].classList.add('complete');
-            incrementCorrect();
+            // incrementCorrect();
+            stats.pushKeystroke(Date.now(), code, true);
         }
     }
     // logAccuracy();
 }
-
-export function getLetterCount() {
-    return [correctLetters, totalLetters];
-}
-
-function logAccuracy() {
-    console.log(`${100 * (correctLetters / totalLetters)}%`);
-}
-
-function incrementCorrect() {
-    correctLetters++;
-    totalLetters++;
-}
-
-function removeCorrect() {
-    correctLetters--;
-}
-
-// Case1:typing everything is right backspace type incorrect letter --> decrement correct, 
-// Case2:" " type correct letter
-// Case3: typing, something is incorrect, backspace, type incorrect letter
-// Case4: " " tpye corrrect letter
 
 function eraseLetter() {
     const i = cursor.getIndex();
@@ -147,8 +129,9 @@ function eraseLetter() {
         
     } else if (classList.contains('correct')) {
         letterArray[i].classList.remove('correct');
-        removeCorrect();
+        // removeCorrect();
     }     
+    stats.excludeKeystroke();
 }
 
 export function removeTopRow() {
@@ -175,18 +158,44 @@ export function setAllowedToType(bool) {
     allowedToType = bool;
 } 
 
+export function toggleTestHidden() {
+    let toggleHidden = (item) => {
+        item.classList.toggle('hidden');
+    };
+    toggleHidden(document.querySelector('.text-area'));
+    toggleHidden(document.querySelector('.timer'));
+    toggleHidden(document.getElementById('train'));
+    toggleHidden(document.getElementById('cursor'));
+    toggleHidden(document.getElementById('results'));
+}
+
+function showTest() {
+    let show = (item) => {
+        item.classList.remove('hidden');
+    }
+    show(document.querySelector('.text-area'));
+    show(document.querySelector('.timer'));
+    show(document.getElementById('train'));
+    show(document.getElementById('cursor'));
+    show(document.getElementById('results'));
+
+    document.getElementById('results').classList.add('hidden');
+}
+
 document.addEventListener('keydown', (k) => {
     const alphaNumeric = /^((Key[A-Z])|(Digit[0-9])|(Space))$/i;
     if (k.code == "Tab") {
-        setAllowedToType(true);
         k.preventDefault();
         spinAndRestart();
-        
+        document.querySelector('.refresh-instructions').classList.add('fade-out');
+    } else if (k.code == "Escape") {
+        toggleTestHidden();
     } else if (!allowedToType) {
         return;
     } else if (alphaNumeric.test(k.code)) {
         if (!timer.isActive()) {
             timer.startTimer();
+            stats.setStartTime(Date.now());
         }
         cursor.blinkOff();
 
@@ -195,6 +204,9 @@ document.addEventListener('keydown', (k) => {
         cursor.updatePosition();
     } else if (k.code == "Backspace") {
         cursor.blinkOff();
+        if (cursor.getIndex() == 0) {
+            return;
+        }
         cursor.decrementIndex();
         eraseLetter();
         cursor.updatePosition();
