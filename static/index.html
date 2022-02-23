@@ -15,7 +15,7 @@
 </head>
 <body>
     <header>
-        <h1 class="center-text"><a href="index.html">🚂 Type Train</a></h1>
+        <h1 class="center-text"><a href="index.html">Type Train</a></h1>
         <div class="profile">
             <i id="profile-icon" class="fas fa-user fa-2x"></i>
             <div class="dd-menu">
@@ -40,17 +40,18 @@
             </div>
         </div>
     </header>
-
-    <div class="timer">
-       <h4>00:00</h4> 
+    
+    <div id="test">
+        <div class="timer">
+           <h4>00:00</h4> 
+        </div>
+        <div id="cursor" class="hidden" style="left: 0px; top: 0px; transform: translateX(0)"></div>
+        <div class="text-area">
+            <div class="text-area-container"></div>
+        </div>
+        <div id="train" style="transform: translateX(0) scaleX(-1)">🚂</div>
     </div>
-    <div id="cursor" class="hidden" style="left: 0px; top: 0px; transform: translateX(0)"></div>
-    <div class="text-area">
-        <div class="text-area-container"></div>
-    </div>
 
-    <!-- train moving -->
-    <div id="train" style="transform: translateX(0)"></div>
     <div class="hidden" id="results">
         <h1 id="results-title">Summary</h1>
         <div id="graph">
