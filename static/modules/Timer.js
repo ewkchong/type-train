@@ -1,4 +1,4 @@
-import { setAllowedToType } from "../app.js";
+import { setAllowedToType, toggleTestHidden } from "../app.js";
 export default class Timer {
   constructor(seconds, train, stats) {
     this.timerElement = document.querySelector('.timer');
@@ -47,15 +47,14 @@ export default class Timer {
   }
 
   endTimer() {
-
-    // const [correct, total] = getLetterCount();
     this.pauseTimer();
     this.timerElement.textContent = "Choo Choo!";
-    // const wordsPerMinute = (correct / 5) / (this.totalTime / 60); 
     setAllowedToType(false);
-    // console.log(`Accuracy: ${100 * (correct / total)}%`);
-    // console.log(`WPM: ${wordsPerMinute}wpm`);
-    this.stats.calculateResult(Date.now());
+    let [wpm, acc] = this.stats.calculateResult(Date.now());
+
+    document.getElementById('wpm-text').textContent = Math.round(wpm);
+    document.getElementById('acc-text').textContent = `${Math.round(acc)}%`;
+    toggleTestHidden();
   }
 
   isActive() {

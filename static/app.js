@@ -68,6 +68,7 @@ export function spinAndRestart() {
     timer.resetTimer();
     stats.reset();
     setAllowedToType(true);
+    showTest();
 
     clearTextArea();
     populateTextField();
@@ -184,14 +185,13 @@ function showTest() {
 document.addEventListener('keydown', (k) => {
     const alphaNumeric = /^((Key[A-Z])|(Digit[0-9])|(Space))$/i;
     if (k.code == "Tab") {
-        setAllowedToType(true);
         k.preventDefault();
         spinAndRestart();
-        showTest();
-    } else if (!allowedToType) {
-        return;
+        document.querySelector('.refresh-instructions').classList.add('fade-out');
     } else if (k.code == "Escape") {
         toggleTestHidden();
+    } else if (!allowedToType) {
+        return;
     } else if (alphaNumeric.test(k.code)) {
         if (!timer.isActive()) {
             timer.startTimer();
