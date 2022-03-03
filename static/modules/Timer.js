@@ -13,6 +13,7 @@ export default class Timer {
 
   startTimer() {
     this.originalTime = Date.now();
+    this.stats.clearGraph();
     this.time = setInterval(() => {
       this.currTime = Date.now();
       this.updateTimer();
@@ -51,6 +52,7 @@ export default class Timer {
     this.timerElement.textContent = "Choo Choo!";
     setAllowedToType(false);
     let [wpm, acc] = this.stats.calculateResult(Date.now());
+    this.stats.setUpGraph();
 
     document.getElementById('wpm-text').textContent = Math.round(wpm);
     document.getElementById('acc-text').textContent = `${Math.round(acc)}%`;

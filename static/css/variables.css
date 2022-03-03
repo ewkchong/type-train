@@ -1,9 +1,10 @@
 :root {
     --primary-bg-colour: rgb(228, 228, 228);
-    --secondary-bg-colour: rgb(199, 199, 199);
+    --secondary-bg-colour: rgb(210, 210, 210);
     /* --secondary-bg-colour: rgb(228, 228, 228); */
     --incomplete-word: #8a8a8a;
     --complete-word: black;
     --incorrect-word: red;
     --caret-colour: black;
+    --primary-font: 'Source Code Pro';
 }

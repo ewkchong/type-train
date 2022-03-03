@@ -1,8 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans&family=Source+Code+Pro&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&family=Source+Code+Pro&family=Roboto+Mono&display=swap');
 @import url('variables.css');
 
 body {
-    font-family: 'Source Code Pro'; 
+    font-family: var(--primary-font); 
     background-color: var(--primary-bg-colour);
     display: flex;
     flex-direction: column;
@@ -21,8 +21,23 @@ body {
     border-radius: 20%;
     background-color: var(--caret-colour);
     will-change: transform;
-    transition: transform 105ms ease-in-out;
-    z-index: 150;
+    transition: transform 100ms ease-in-out;
+}
+
+#test {
+    display: flex;
+    flex-direction: column;
+    margin-left: 9vw;
+    margin-right: 9vw;
+    margin-top: 3.5rem;
+}
+
+.timer {
+    font-family: 'Roboto Mono';
+    font-size: 1.25rem;
+    width: auto;
+    align-self: flex-end;
+    user-select: none;
 }
 
 .text-area-container {
@@ -36,23 +51,24 @@ body {
 .text-area {
     display: flex;
     justify-content: space-around;
-    border: 2px black solid; 
+    border: 2px rgba(184, 184, 184, 0.8) solid; 
     padding: 3vw 5vw 3vw 5vw;
-    margin-left: 13vw;
-    margin-right: 13vw;
     min-height: 5rem;
     max-height: 132px;
     user-select: none;
 }
 
 #train {
-    background-color: black;
-    width: 4rem;
+    /* background-color: black; */
+    /* border: 1px black solid; */
+    font-size: 1.8rem;
+    width: fit-content;
     height: 2rem;
     margin-top: 1rem;
-    margin-left: 13vw;
+    transform: translateX(0) scaleX(-1);
     will-change: transform;
     transition: transform 100ms ease-out;
+    /* user-select: none; */
 }
 
 @keyframes fade-in {
@@ -169,11 +185,4 @@ footer .settings-label {
     filter: blur(4px) !important;
 }
 
-.timer {
-    width: auto;
-    position: relative;
-    margin-top: 3.5rem;
-    margin-right: 13vw;
-    margin-left: auto;
-}
 

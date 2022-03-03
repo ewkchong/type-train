@@ -8,7 +8,7 @@ export default class Train {
 
     updateTrainPosition(completion) {
         this.completion = completion;
-        this.trainElement.style = `transform: translateX(${this.distance * this.completion}px)`;
+        this.trainElement.style = `transform: translateX(${this.distance * this.completion}px) scaleX(-1);`;
     }
 
     resetDistance() {
