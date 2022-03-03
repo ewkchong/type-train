@@ -14,7 +14,7 @@ const wordArray = [];
 const cursor = new Cursor(letterArray);
 const train = new Train();
 const stats = new Stats(Date.now());
-const timer = new Timer(30, train, stats);
+const timer = new Timer(15, train, stats);
 let allowedToType = true;
 
 document.onload = populateTextField();

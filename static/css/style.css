@@ -2,7 +2,7 @@
 @import url('variables.css');
 
 body {
-    font-family: 'Source Code Pro'; 
+    font-family: var(--primary-font); 
     background-color: var(--primary-bg-colour);
     display: flex;
     flex-direction: column;
@@ -34,7 +34,7 @@ body {
 
 .timer {
     font-family: 'Roboto Mono';
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     width: auto;
     align-self: flex-end;
     user-select: none;
@@ -68,6 +68,7 @@ body {
     transform: translateX(0) scaleX(-1);
     will-change: transform;
     transition: transform 100ms ease-out;
+    /* user-select: none; */
 }
 
 @keyframes fade-in {

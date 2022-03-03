@@ -42,21 +42,21 @@ body {
 }
 
 .login-button, .register-button {
-    background-color: transparent;
+    background-color: var(--secondary-bg-colour);
     border-radius: 10px;
     font-family: 'Source Code Pro', monospace;
     font-size: 1rem;
     color: black;
     align-self: center;
     transition: background-color 0.3s ease-in-out;
-    padding: 1rem;
+    padding: 0.5rem 4rem;
     border-style: none; 
 
 
 }
 
 .login-button:hover, .register-button:hover {
-    background-color:var(--secondary-bg-colour);
+    background-color: rgba(188, 188, 188);
     transition: background-color 0.7s ease-out;
 }
 

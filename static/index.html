@@ -10,6 +10,7 @@
     <meta name="description" content="Type Train is an app that helps users type faster, more accurately, and more efficiently">
     
     <script src="https://kit.fontawesome.com/843c7351f1.js" crossorigin="anonymous"></script>
+    <script src="https://d3js.org/d3.v7.min.js" crossorigin="anonymous"></script>
     <script type="module" src="app.js" defer></script>
     <title>Type Train</title>
 </head>
@@ -40,7 +41,6 @@
             </div>
         </div>
     </header>
-    
     <div id="test">
         <div class="timer">
            <h4>00:00</h4> 
@@ -55,7 +55,6 @@
     <div class="hidden" id="results">
         <h1 id="results-title">Summary</h1>
         <div id="graph">
-            graph goes here
         </div>
         <div id="results-wrapper">
             <div class="result-item" id="wpm">
@@ -65,10 +64,6 @@
             <div class="result-item" id="acc">
                 <h4>ACC: <span class="result-text" id="acc-text">100%</span><h4>
             </div>
-        </div>
-        
-        <div class = "results-graph">
-
         </div>
     </div>
     <div class="refresh-button">
@@ -83,7 +78,5 @@
         <div class="settings-panel"></div>
         
     </footer>
-
-
 </body>
 </html>
