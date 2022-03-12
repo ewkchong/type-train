@@ -53,6 +53,7 @@ export default class Timer {
     setAllowedToType(false);
     let [wpm, acc] = this.stats.calculateResult(Date.now());
     this.stats.setUpGraph();
+    console.log(this.stats.constructData());
 
     document.getElementById('wpm-text').textContent = Math.round(wpm);
     document.getElementById('acc-text').textContent = `${Math.round(acc)}%`;

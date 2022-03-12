@@ -38,31 +38,65 @@ export default class Stats {
         const totalLetters = typedLetters + excludedLetters;
         const uncorrectedErrors = this.keystrokes.filter((k) => k.correct == false).length;
         const excludedErrors = this.excluded.filter((k) => k.correct == false).length;
-        const wordsPerMinute = (((typedLetters - uncorrectedErrors) / 5) * 60) / duration;
+        const wordsPerMinute = this.calculateWPM(typedLetters, uncorrectedErrors, duration);
         const accuracy = ((totalLetters - uncorrectedErrors - excludedErrors) / totalLetters) * 100;
-        console.log(`WPM: ${wordsPerMinute}wpm`);
-        console.log(`accuracy: ${accuracy}%`);
-        console.log(`typed letters: ${typedLetters}, uncorrectedErrors: ${uncorrectedErrors}, totalLetters: ${totalLetters}`)
-        console.log(this.keystrokes);
-        console.log(this.excluded);
+        console.log(`WPM: ${wordsPerMinute}wpm, accuracy: ${accuracy}%, typed letters: ${typedLetters}, uncorrectedErrors: ${uncorrectedErrors}, totalLetters: ${totalLetters}`)
+        // console.log(this.keystrokes);
+        // console.log(this.excluded);
     
         return [wordsPerMinute, accuracy];
     }
 
-    getTimeArray() {
-        return this.keystrokes.map((key) => {
-            key.time -= this.startTime;
-            return Math.round(key.time / 1000);
-        })
+    calculateWPM(typed, uncorrected, duration) {
+        return (((typed - uncorrected) / 5) * 60) / duration;
     }
 
-    getWpmArray() {
-        const wpmArray = [];
-        while(this.getTimeArray(this.startTime)) {
-            wpmArray.push(this.calculateResult(this.getTimeArray(this.startTime)));
+    constructData() {
+        let timePassed = Math.round((this.endTime - this.startTime) / 1000);
+        let normalizedKeystrokes = this.keystrokes.map((keystroke) => {
+            let newKeystroke = {
+                time: keystroke.time - this.startTime,
+                letter: keystroke.letter,
+                correct: keystroke.correct
+            }
+            return newKeystroke;
+        });
+
+        // let normalizedKeystrokes = this.keystrokes;
+        // console.log("keystrokes: ", this.keystrokes);
+        // console.log("normalized: ", normalizedKeystrokes);
+
+        let data = [];
+        for (let i = 1; i < timePassed + 1; i++) {
+            let typedArr = normalizedKeystrokes.filter((keystroke) => keystroke.time < i * 1000);
+            // console.log("typedArr: ", typedArr);
+            let uncorrected = typedArr.filter((keystroke) => !keystroke.correct).length;
+            // console.log("uncorrected: ", uncorrected);
+            let wpm = this.calculateWPM(typedArr.length, uncorrected, i);
+
+            let dataPoint = {
+                x: i - 1,
+                y: wpm
+            }
+            data.push(dataPoint);
         }
-        return wpmArray;
+        return data;
     }
+
+    // getTimeArray() {
+    //     return this.keystrokes.map((key) => {
+    //         key.time -= this.startTime;
+    //         return Math.round(key.time / 1000);
+    //     });
+    // }
+
+    // getWpmArray() {
+    //     const wpmArray = [];
+    //     while(this.getTimeArray(this.startTime)) {
+    //         wpmArray.push(this.calculateResult(this.getTimeArray(this.startTime)));
+    //     }
+    //     return wpmArray;
+    // }
 
     // chart = lineChart(this.getTimeArray {
     //     x: d => d.
@@ -70,10 +104,10 @@ export default class Stats {
 
     // Copyright 2021 Observable, Inc.
     // Released under the ISC license.
-    // https://observablehq.com/@d3/histogram
+    // https://observablehq.com/@d3/line-chart
     lineChart(data, {
-        x = ([x]) => x, // given d in data, returns the (temporal) x-value
-        y = ([, y]) => y, // given d in data, returns the (quantitative) y-value
+        x = (d) => d.x, // given d in data, returns the (temporal) x-value
+        y = (d) => d.y, // given d in data, returns the (quantitative) y-value
         defined, // for gaps in data
         curve = d3.curveLinear, // method of interpolation between points
         marginTop = 20, // top margin, in pixels
@@ -81,8 +115,8 @@ export default class Stats {
         marginBottom = 30, // bottom margin, in pixels
         marginLeft = 40, // left margin, in pixels
         width = 640, // outer width, in pixels
-        height = 400, // outer height, in pixels
-        xType = d3.scaleUtc, // the x-scale type
+        height = 275, // outer height, in pixels
+        xType = d3.scaleLinear, // the x-scale type
         xDomain, // [xmin, xmax]
         xRange = [marginLeft, width - marginRight], // [left, right]
         yType = d3.scaleLinear, // the y-scale type
@@ -105,13 +139,13 @@ export default class Stats {
 
         // Compute default domains.
         if (xDomain === undefined) xDomain = d3.extent(X);
-        if (yDomain === undefined) yDomain = [0, d3.max(Y)];
+        if (yDomain === undefined) yDomain = [0, d3.max(Y) + 20];
 
         // Construct scales and axes.
         const xScale = xType(xDomain, xRange);
         const yScale = yType(yDomain, yRange);
         const xAxis = d3.axisBottom(xScale).ticks(width / 80).tickSizeOuter(0);
-        const yAxis = d3.axisLeft(yScale).ticks(height / 40, yFormat);
+        const yAxis = d3.axisLeft(yScale).ticks(height / 50, yFormat);
 
         // Construct a line generator.
         const line = d3.line()
@@ -157,7 +191,7 @@ export default class Stats {
     }
     
     setUpGraph() {
-        document.getElementById('graph').appendChild(this.lineChart(this.getTimeArray()));
+        document.getElementById('graph').appendChild(this.lineChart(this.constructData()));
     }
 
     clearGraph() {
