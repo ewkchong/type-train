@@ -1,3 +1,4 @@
+
 export default class Stats {
     constructor(startTime) {
         this.keystrokes = [];
@@ -37,11 +38,8 @@ export default class Stats {
         const totalLetters = typedLetters + excludedLetters;
         const uncorrectedErrors = this.keystrokes.filter((k) => k.correct == false).length;
         const excludedErrors = this.excluded.filter((k) => k.correct == false).length;
-        
         const wordsPerMinute = (((typedLetters - uncorrectedErrors) / 5) * 60) / duration;
-
         const accuracy = ((totalLetters - uncorrectedErrors - excludedErrors) / totalLetters) * 100;
-
         console.log(`WPM: ${wordsPerMinute}wpm`);
         console.log(`accuracy: ${accuracy}%`);
         console.log(`typed letters: ${typedLetters}, uncorrectedErrors: ${uncorrectedErrors}, totalLetters: ${totalLetters}`)
@@ -58,62 +56,79 @@ export default class Stats {
         })
     }
 
+    getWpmArray() {
+        const wpmArray = [];
+        while(this.getTimeArray(this.startTime)) {
+            wpmArray.push(this.calculateResult(this.getTimeArray(this.startTime)));
+        }
+        return wpmArray;
+    }
+
+    // chart = lineChart(this.getTimeArray {
+    //     x: d => d.
+    // })
+
     // Copyright 2021 Observable, Inc.
     // Released under the ISC license.
     // https://observablehq.com/@d3/histogram
-    Histogram(data, {
-        value = d => d, // convenience alias for x
-        domain, // convenience alias for xDomain
-        label, // convenience alias for xLabel
-        format, // convenience alias for xFormat
-        type = d3.scaleLinear, // convenience alias for xType
-        x = value, // given d in data, returns the (quantitative) x-value
-        y = () => 1, // given d in data, returns the (quantitative) weight
-        thresholds = Math.round((this.endTime - this.startTime) / 1000), // approximate number of bins to generate, or threshold function
+    lineChart(data, {
+        x = ([x]) => x, // given d in data, returns the (temporal) x-value
+        y = ([, y]) => y, // given d in data, returns the (quantitative) y-value
+        defined, // for gaps in data
+        curve = d3.curveLinear, // method of interpolation between points
         marginTop = 20, // top margin, in pixels
         marginRight = 30, // right margin, in pixels
         marginBottom = 30, // bottom margin, in pixels
         marginLeft = 40, // left margin, in pixels
-        width = 640, // outer width of chart, in pixels
-        height = 200, // outer height of chart, in pixels
-        insetLeft = 0.5, // inset left edge of bar
-        insetRight = 0.5, // inset right edge of bar
-        xType = type, // type of x-scale
-        xDomain = domain, // [xmin, xmax]
+        width = 640, // outer width, in pixels
+        height = 400, // outer height, in pixels
+        xType = d3.scaleUtc, // the x-scale type
+        xDomain, // [xmin, xmax]
         xRange = [marginLeft, width - marginRight], // [left, right]
-        xLabel = "→ Time (s)", // a label for the x-axis
-        xFormat = format, // a format specifier string for the x-axis
-        yType = d3.scaleLinear, // type of y-scale
+        yType = d3.scaleLinear, // the y-scale type
         yDomain, // [ymin, ymax]
         yRange = [height - marginBottom, marginTop], // [bottom, top]
-        yLabel = "↑ Keys", // a label for the y-axis
         yFormat, // a format specifier string for the y-axis
-        color = "currentColor" // bar fill color
-        } = {}) {
+        yLabel = "Words Per Minute", // a label for the y-axis
+        color = "black", // stroke color of line
+        strokeLinecap = "round", // stroke line cap of the line
+        strokeLinejoin = "round", // stroke line join of the line
+        strokeWidth = 1.5, // stroke width of line, in pixels
+        strokeOpacity = 1, // stroke opacity of line
+    } = {}) {
         // Compute values.
         const X = d3.map(data, x);
         const Y = d3.map(data, y);
         const I = d3.range(X.length);
-
-        // Compute bins.
-        const bins = d3.bin().thresholds(thresholds).value(i => X[i])(I);
+        if (defined === undefined) defined = (d, i) => !isNaN(X[i]) && !isNaN(Y[i]);
+        const D = d3.map(data, defined);
 
         // Compute default domains.
-        if (xDomain === undefined) xDomain = [bins[0].x0, bins[bins.length - 1].x1];
-        if (yDomain === undefined) yDomain = [0, d3.max(bins, I => d3.sum(I, i => Y[i]))];
+        if (xDomain === undefined) xDomain = d3.extent(X);
+        if (yDomain === undefined) yDomain = [0, d3.max(Y)];
 
         // Construct scales and axes.
         const xScale = xType(xDomain, xRange);
         const yScale = yType(yDomain, yRange);
-        const xAxis = d3.axisBottom(xScale).ticks(width / 80, xFormat).tickSizeOuter(0);
+        const xAxis = d3.axisBottom(xScale).ticks(width / 80).tickSizeOuter(0);
         const yAxis = d3.axisLeft(yScale).ticks(height / 40, yFormat);
-        yFormat = yScale.tickFormat(100, yFormat);
+
+        // Construct a line generator.
+        const line = d3.line()
+            .defined(i => D[i])
+            .curve(curve)
+            .x(i => xScale(X[i]))
+            .y(i => yScale(Y[i]));
 
         const svg = d3.create("svg")
             .attr("width", width)
             .attr("height", height)
             .attr("viewBox", [0, 0, width, height])
             .attr("style", "max-width: 100%; height: auto; height: intrinsic;");
+
+        svg.append("g")
+            .attr("transform", `translate(0,${height - marginBottom})`)
+            .call(xAxis);
 
         svg.append("g")
             .attr("transform", `translate(${marginLeft},0)`)
@@ -127,39 +142,22 @@ export default class Stats {
                 .attr("y", 10)
                 .attr("fill", "currentColor")
                 .attr("text-anchor", "start")
-                .attr("font-size", "0.9rem")
-                .attr("font-family", "Source Code Pro")
                 .text(yLabel));
 
-        svg.append("g")
-            .attr("fill", color)
-            .selectAll("rect")
-            .data(bins)
-            .join("rect")
-            .attr("x", d => xScale(d.x0) + insetLeft)
-            .attr("width", d => Math.max(0, xScale(d.x1) - xScale(d.x0) - insetLeft - insetLeft))
-            .attr("y", d => yScale(d3.sum(d, i => Y[i])))
-            .attr("height", d => yScale(0) - yScale(d3.sum(d, i => Y[i])))
-            .append("title")
-            .text((d, i) => [`${d.x0} ≤ x < ${d.x1}`, yFormat(d3.sum(d, i => Y[i]))].join("\n"));
+        svg.append("path")
+            .attr("fill", "none")
+            .attr("stroke", color)
+            .attr("stroke-width", strokeWidth)
+            .attr("stroke-linecap", strokeLinecap)
+            .attr("stroke-linejoin", strokeLinejoin)
+            .attr("stroke-opacity", strokeOpacity)
+            .attr("d", line(I));
 
-        svg.append("g")
-            .attr("transform", `translate(0,${height - marginBottom})`)
-            .call(xAxis)
-            .call(g => g.append("text")
-                .attr("x", width - marginRight)
-                .attr("y", 27)
-                .attr("fill", "currentColor")
-                .attr("text-anchor", "end")
-                .attr("font-size", "0.78rem")
-                .attr("font-family", "Source Code Pro")
-                .text(xLabel));
-
-                return svg.node();
+        return svg.node();
     }
-
+    
     setUpGraph() {
-        document.getElementById('graph').appendChild(this.Histogram(this.getTimeArray()));
+        document.getElementById('graph').appendChild(this.lineChart(this.getTimeArray()));
     }
 
     clearGraph() {
@@ -167,4 +165,6 @@ export default class Stats {
             document.querySelector('svg').remove();
         }
     }
+
+    
 }
