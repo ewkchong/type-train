@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import {getAuth } from "firebase/auth";
+import { connectAuthEmulator, getAuth } from "firebase/auth";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -18,12 +18,27 @@ const firebaseConfig = {
   measurementId: "G-ZR3VZRHSW9"
 };
 
+let debug = true;
+
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const auth = getAuth(app)
 
- 
+if (debug) {
+  connectAuthEmulator(auth, 'http://localhost:9099');
+}
+
+const loginButton = document.getElementById('login-button');
+const googleButton = document.getElementById('google-button');
+
+loginButton.addEventListener('click', () => {
+  console.log("login button clicked");
+});
+
+googleButton.addEventListener('click', () => {
+  console.log('google button clicked');
+}) 
 
 
 

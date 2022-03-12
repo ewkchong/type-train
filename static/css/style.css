@@ -21,7 +21,8 @@ body {
     border-radius: 20%;
     background-color: var(--caret-colour);
     will-change: transform;
-    transition: transform 100ms ease-in-out;
+    /* transition: transform 100ms ease-in-out; */
+    transition: transform 125ms cubic-bezier(.47,.29,.55,.75);
 }
 
 #test {
