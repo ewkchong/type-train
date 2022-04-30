@@ -11,12 +11,13 @@ body {
     background-color: var(--primary-bg-colour);
     display: flex;
     flex-direction: column;
-    height: 98vh;
+    /* height: 98vh; */
 }
 
 header {
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 
 .center-text {
@@ -82,7 +83,7 @@ a {
 footer {
     display: flex;
     width: 100%;
-    position: absolute;
+    position: fixed;
     bottom: 0;
     background-color: var(--primary-bg-colour);
 }
