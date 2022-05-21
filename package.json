@@ -4,7 +4,10 @@
   "description": "A web application to improve your typing skills.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npx webpack-cli",
+    "serve": "serve",
+    "emulators": "firebase emulators:start"
   },
   "repository": {
     "type": "git",
@@ -23,5 +26,10 @@
   },
   "jshintConfig": {
     "esversion": 8
+  },
+  "devDependencies": {
+    "serve": "^13.0.2",
+    "webpack": "^5.69.1",
+    "webpack-cli": "^4.9.2"
   }
 }

@@ -9,14 +9,11 @@
     <link href="./css/login.css" rel="stylesheet" type="text/css"/>
     <link href="./css/header.css" rel="stylesheet" type="text/css"/>
     <script src="https://kit.fontawesome.com/843c7351f1.js" crossorigin="anonymous"></script>
-    <script src="./js/login.js"></script>
-
+    <script src="../dist/main.js" defer></script>
 </head>
-
   <body>
-
     <header>
-        <h1 class="center-text"><a href="index.html">🚂 Type Train</a></h1>
+        <h1 class="center-text"><a href="./">Type Train</a></h1>
         <img src="" alt="" id="train">
         <div class="profile">
             <i id="profile-icon" class="fas fa-user fa-2x"></i>
@@ -39,45 +36,38 @@
         </div>
     </header>
 
-
-    <div class = "register">
-        <h3> Register: </h3>
-        <div class = "input-texts">
+    <div class="register">
+        <h3>Register:</h3>
+        <div class="input-container">
             <input type="text" placeholder = "username" class="input-field" id="register-username">
             <input type="text" placeholder = "email" class="input-field" id="email">
             <input type="text" placeholder = "confirm email" class="input-field" id="verify-email">
             <input type="password" placeholder = "password" class="input-field" id="register-password">
             <input type="password" placeholder = "confirm password" class="input-field" id="verify-password">
-            
         </div>
-    
-        <button type = "button" class = "register-button"> Sign up </button>
-
+        <button id="register-button" class="type-button">Sign up</button>
     </div>
 
-    <div class = "login">
-        <h3> Login: </h3>
-        
-        <div class = "input-texts">
+    <div class="login">
+        <h3>Login:</h3>
+        <div class="input-container">
             <input type="text" placeholder="username" class="input-field" id="login-username">
-            <input type="password" placeholder = "password" class="input-field" id="login-password">
+            <input type="password" placeholder="password" class="input-field" id="login-password">
         </div>
 
         <div>
-        <a href = "" id= "forgot-password">Forgot password?</a>
+        <a href="" id="forgot-password">Forgot password?</a>
         </div>
 
-        <button type = "button" class = "login-button"> Login </button>
-        
+        <div id="button-container">
+            <button type="button" class="type-button" id="login-button">Login</button>
+            <button class="type-button" id="login-google"><i class="fa-brands fa-google"></i> Login with Google</button>
+        </div>
     </div>
-    
   </body>
-
 <footer>
     <a href="/static/"><i class="fa-solid fa-envelope"></i> Contact</a>
     <a href="https://github.com/ewkchong/typing-project"><i class="fa-brands fa-github"></i> GitHub</a>
-
     <div class="settings-panel"></div>
 </footer>
-
 </html>

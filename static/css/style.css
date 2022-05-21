@@ -6,8 +6,8 @@ body {
     background-color: var(--primary-bg-colour);
     display: flex;
     flex-direction: column;
-    min-height: 98vh;
-    overflow: hidden;
+    /* min-height: 100vh; */
+    /* overflow: hidden; */
 }
 
 .center-text {
@@ -21,7 +21,8 @@ body {
     border-radius: 20%;
     background-color: var(--caret-colour);
     will-change: transform;
-    transition: transform 100ms ease-in-out;
+    /* transition: transform 100ms ease-in-out; */
+    transition: transform 125ms cubic-bezier(.47,.29,.55,.75);
 }
 
 #test {
@@ -99,11 +100,11 @@ h4 {
     margin: 0 !important;
 }
 
-footer {
+/* footer {
     display: flex;
     margin-top: auto;
     background-color: var(--secondary-bg-colour);
-}
+} */
 
 footer a {
     margin-right: 2rem;

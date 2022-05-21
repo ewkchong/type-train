@@ -29,7 +29,7 @@ export default class Timer {
     this.timerSeconds = this.totalTime - ((this.currTime - this.originalTime) / 1000);
 
     const min = Math.floor(this.timerSeconds / 60);
-    const sec = Math.floor(this.timerSeconds % 60);
+    const sec = Math.ceil(this.timerSeconds % 60);
 
     this.timerElement.textContent = `${min < 10 ? "0" : ""}${min}:${sec < 10 ? "0" : ""}${sec}`;
     this.train.updateTrainPosition((this.currTime - this.originalTime) / (this.totalTime * 1000));
@@ -57,6 +57,8 @@ export default class Timer {
     document.getElementById('wpm-text').textContent = Math.round(wpm);
     document.getElementById('acc-text').textContent = `${Math.round(acc)}%`;
     toggleTestHidden();
+    document.dispatchEvent(new Event('timerend'))
+    console.log('event dispatched')
   }
 
   isActive() {
