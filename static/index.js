@@ -1,14 +1,9 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { connectAuthEmulator, getAuth, GoogleAuthProvider} from "firebase/auth";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import {getDatabse, set, ref} from "firebase/database";
-
-
-
-
-
+import { connectAuthEmulator, getAuth, GoogleAuthProvider, createUserWithEmailAndPassword, onAuthStateChanged} from "firebase/auth";
+import { getDatabase, set, ref} from "firebase/database";
+import { doc, setDoc, getFirestore, connectFirestoreEmulator } from "firebase/firestore";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -32,23 +27,22 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
-const database = getDatbase(app);
-
+const db = getFirestore(app);
 
 if (debug) {
   connectAuthEmulator(auth, 'http://localhost:9099');
+  connectFirestoreEmulator(db, 'localhost', 8080);
 }
 
 const loginButton = document.getElementById('login-button');
 const googleButton = document.getElementById('login-google');
 const signUpButton = document.getElementById('signUp-button');
-const logoutButton = document.getElementById('logout-button');
+// const logoutButton = document.getElementById('logout-button');
 // need to implement logout button on approp. pa ge
 
-
-loginButton.addEventListener('click', () => {
-  console.log("login button clicked");
-});
+// loginButton.addEventListener('click', () => {
+//   console.log("login button clicked");
+// });
 
 googleButton.addEventListener('click', () => {
   firebase.signInWithPopup(firebase.auth, firebase.provider)
@@ -66,7 +60,7 @@ document.addEventListener('timerend', () => {
 
 signUpButton.addEventListener('click', (e) =>{
 
-  var email = document.getElementById('email').value;
+  var email = document.getElementById('register-email').value;
   var password = document.getElementById('register-password').value;
   var username = document.getElementById('register-username').value;
 
@@ -75,11 +69,19 @@ signUpButton.addEventListener('click', (e) =>{
     // Signed in 
     const user = userCredential.user;
 
-    set(ref(database, 'users/'+ user.uid) {
-      username: username,
-      email: email
-    })
-    alert('user created');
+    createUserEntry(user.uid, username, email);
+    // setDoc(doc(db, "users", uid) , {
+    //   id: uid,
+    //   username: username,
+    //   email: email,
+    // });
+
+    alert("User created");
+    // set(ref(database, 'users/'+ user.uid) {
+    //   username: username,
+    //   email: email
+    // })
+    // alert('user created');
    
   })
   .catch((error) => {
@@ -91,6 +93,13 @@ signUpButton.addEventListener('click', (e) =>{
   });
 });
 
+async function createUserEntry(uid, username, email) {
+  await setDoc(doc(db, "users", uid) , {
+    id: uid,
+    username: username,
+    email: email,
+  });
+}
 
 const user = auth.currentUser;
 
@@ -109,19 +118,19 @@ onAuthStateChanged(auth, (user) => {
 });
 
 
-logout.addEventListener('click',(e)=>{
+// logout.addEventListener('click',(e)=>{
 
-  signOut(auth).then(() => {
-    // Sign-out successful.
-    alert('user loged out');
-  }).catch((error) => {
-    // An error happened.
-    const errorCode = error.code;
-    const errorMessage = error.message;
+//   signOut(auth).then(() => {
+//     // Sign-out successful.
+//     alert('user loged out');
+//   }).catch((error) => {
+//     // An error happened.
+//     const errorCode = error.code;
+//     const errorMessage = error.message;
 
-       alert(errorMessage);
-  });
+//        alert(errorMessage);
+//   });
 
-});
+// });
 
 
