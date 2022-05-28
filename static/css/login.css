@@ -21,6 +21,7 @@ body {
     margin-top: 4px;
     margin-bottom: 4px;   
     box-sizing: border-box;
+    transition: border 60ms ease-in-out;
 }
 
 .input-container {
@@ -100,6 +101,9 @@ body {
     flex-direction: column;
 }
 
+.non-match {
+    border: 1px solid red;
+}
 
 
 

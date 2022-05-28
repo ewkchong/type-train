@@ -34,16 +34,19 @@ if (debug) {
   connectFirestoreEmulator(db, 'localhost', 8080);
 }
 
+// Login page element references
 const loginButton = document.getElementById('login-button');
 const googleButton = document.getElementById('login-google');
 const signUpButton = document.getElementById('signUp-button');
+
+const emailInput = document.getElementById('register-email');
+const verifyEmail = document.getElementById('verify-email');
+const passwordInput = document.getElementById('register-password');
+const verifyPassword = document.getElementById('verify-password');
 // const logoutButton = document.getElementById('logout-button');
 // need to implement logout button on approp. pa ge
 
-// loginButton.addEventListener('click', () => {
-//   console.log("login button clicked");
-// });
-
+// Login user with Google Auth Provider
 googleButton.addEventListener('click', () => {
   firebase.signInWithPopup(firebase.auth, firebase.provider)
     .then((res) => {
@@ -54,52 +57,44 @@ googleButton.addEventListener('click', () => {
     })
 }) 
 
-document.addEventListener('timerend', () => {
-  console.log("timer ended, event dispatched");
-})
+/* Adds event listener to email and password inputs 
+to turn input red when they do not match */
+inputMatchBorder(verifyEmail, emailInput);
+inputMatchBorder(verifyPassword, passwordInput);
 
+// Sign up button functionality
 signUpButton.addEventListener('click', (e) =>{
-
   var email = document.getElementById('register-email').value;
   var password = document.getElementById('register-password').value;
   var username = document.getElementById('register-username').value;
+  
+  if (!checkMatch(verifyEmail, emailInput) || !checkMatch(verifyPassword, passwordInput)) {
+    alert("Please fix any errors below and resubmit");
+    return;
+  }
 
+  // Use Firebase Auth to create user
   createUserWithEmailAndPassword(auth, email, password)
   .then((userCredential) => {
-    // Signed in 
     const user = userCredential.user;
-
     createUserEntry(user.uid, username, email);
-    // setDoc(doc(db, "users", uid) , {
-    //   id: uid,
-    //   username: username,
-    //   email: email,
-    // });
-
     alert("User created");
-    // set(ref(database, 'users/'+ user.uid) {
-    //   username: username,
-    //   email: email
-    // })
-    // alert('user created');
-   
   })
   .catch((error) => {
     const errorCode = error.code;
     const errorMessage = error.message;
-   
-    alert('errorMessage');
+    if (errorCode == "auth/email-already-in-use") {
+      emailInput.classList.add('non-match');
+    }
+    console.log("errorCode: ", errorCode);
+    console.log("errorMessage: ", errorMessage);
 
   });
 });
 
-async function createUserEntry(uid, username, email) {
-  await setDoc(doc(db, "users", uid) , {
-    id: uid,
-    username: username,
-    email: email,
-  });
-}
+emailInput.addEventListener('input', () => {
+  emailInput.classList.remove('non-match');
+});
 
 const user = auth.currentUser;
 
@@ -117,7 +112,33 @@ onAuthStateChanged(auth, (user) => {
   }
 });
 
+const checkMatch = (a, b) => a.value == b.value;
 
+// Adds a red border to input element when it does not match other input
+function inputMatchBorder(confirm, input) {
+  confirm.addEventListener('input', () => {
+    if (confirm.value == input.value) {
+      confirm.classList.remove('non-match');
+    } else {
+      confirm.classList.add('non-match');
+    }
+  });
+
+  confirm.addEventListener('focusout', () => {
+    if (confirm.value == "") {
+      confirm.classList.remove('non-match');
+    }
+  });
+}
+
+// Adds a User entry for created user in Firestore
+async function createUserEntry(uid, username, email) {
+  await setDoc(doc(db, "users", uid) , {
+    id: uid,
+    username: username,
+    email: email,
+  });
+}
 // logout.addEventListener('click',(e)=>{
 
 //   signOut(auth).then(() => {
@@ -132,5 +153,3 @@ onAuthStateChanged(auth, (user) => {
 //   });
 
 // });
-
-
