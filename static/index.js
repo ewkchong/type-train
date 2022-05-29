@@ -1,8 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { connectAuthEmulator, getAuth, GoogleAuthProvider, createUserWithEmailAndPassword, onAuthStateChanged} from "firebase/auth";
-import { getDatabase, set, ref} from "firebase/database";
+import { connectAuthEmulator, getAuth, GoogleAuthProvider, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword} from "firebase/auth";
 import { doc, setDoc, getFirestore, connectFirestoreEmulator } from "firebase/firestore";
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -43,6 +42,9 @@ const emailInput = document.getElementById('register-email');
 const verifyEmail = document.getElementById('verify-email');
 const passwordInput = document.getElementById('register-password');
 const verifyPassword = document.getElementById('verify-password');
+
+const loginUsername = document.getElementById('login-username');
+const loginPassword = document.getElementById('login-password');
 // const logoutButton = document.getElementById('logout-button');
 // need to implement logout button on approp. pa ge
 
@@ -78,13 +80,13 @@ signUpButton.addEventListener('click', (e) =>{
   .then((userCredential) => {
     const user = userCredential.user;
     createUserEntry(user.uid, username, email);
-    alert("User created");
+    window.location.reload();
   })
   .catch((error) => {
     const errorCode = error.code;
     const errorMessage = error.message;
     if (errorCode == "auth/email-already-in-use") {
-      emailInput.classList.add('non-match');
+      emailInput.classList.add('bad-input');
     }
     console.log("errorCode: ", errorCode);
     console.log("errorMessage: ", errorMessage);
@@ -93,7 +95,31 @@ signUpButton.addEventListener('click', (e) =>{
 });
 
 emailInput.addEventListener('input', () => {
-  emailInput.classList.remove('non-match');
+  emailInput.classList.remove('bad-input');
+});
+
+loginButton.addEventListener('click', () => {
+  if (loginUsername.value == "") {
+    loginUsername.classList.add("bad-input");
+  } else if (loginPassword.value == "") {
+    loginPassword.classList.add('bad-input');
+  } else {
+    signInWithEmailAndPassword(auth, loginUsername.value, loginPassword.value)
+      .then((userCredential) => {
+        // const user = userCredential.user;
+        console.log("Login Successful");
+        window.location.replace('/static/');
+      })
+      .catch((err) => {
+        console.log(err);
+        if (err.code == "auth/wrong-password") {
+          // Do something on wrong password
+        } else if (err.code == "auth/user-not-found") {
+          // Do something on user not found
+        }
+        // Do something on error
+      });  
+  }
 });
 
 const user = auth.currentUser;
@@ -118,15 +144,15 @@ const checkMatch = (a, b) => a.value == b.value;
 function inputMatchBorder(confirm, input) {
   confirm.addEventListener('input', () => {
     if (confirm.value == input.value) {
-      confirm.classList.remove('non-match');
+      confirm.classList.remove('bad-input');
     } else {
-      confirm.classList.add('non-match');
+      confirm.classList.add('bad-input');
     }
   });
 
   confirm.addEventListener('focusout', () => {
     if (confirm.value == "") {
-      confirm.classList.remove('non-match');
+      confirm.classList.remove('bad-input');
     }
   });
 }

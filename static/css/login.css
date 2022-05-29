@@ -101,7 +101,7 @@ body {
     flex-direction: column;
 }
 
-.non-match {
+.bad-input {
     border: 1px solid red;
 }
 
